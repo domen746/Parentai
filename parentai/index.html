@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ParentAI — Clean Room, No Argument</title>
+  <link rel="icon" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="#" class="nav-logo">
+      <img src="logo.png" alt="ParentAI" class="logo-img" />
+      <span>ParentAI</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#waitlist" class="nav-cta">Get Early Access</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="grid-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Now in beta — <span id="heroCounter">2,419</span> parents joined
+      </div>
+      <h1 class="hero-title">
+        Your kid cleans.<br />
+        <em>AI verifies.</em>
+      </h1>
+      <p class="hero-sub">
+        ParentAI uses computer vision to scan messy rooms, assign age-appropriate tasks,
+        and confirm they're actually done — no more guesswork, no more arguments.
+      </p>
+
+      <div class="email-wrapper">
+        <form class="hero-form" id="hero-form" novalidate>
+          <div class="input-group">
+            <input type="email" placeholder="your@email.com" class="email-input" id="heroEmail" autocomplete="email" />
+            <div class="email-status" id="heroEmailStatus"></div>
+          </div>
+          <button type="submit" class="btn-primary" id="heroBtn">Join Waitlist</button>
+        </form>
+        <div class="email-feedback" id="heroFeedback"></div>
+      </div>
+
+      <div class="hero-social">
+        <div class="avatar-stack">
+          <div class="av av-1">S</div>
+          <div class="av av-2">M</div>
+          <div class="av av-3">J</div>
+          <div class="av av-4">R</div>
+          <div class="av av-5">+</div>
+        </div>
+        <span>Join <strong id="heroCommunityCount">2,419</strong> parents already signed up</span>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="phone-glow"></div>
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="app-header">
+            <div class="app-avatar">P</div>
+            <div>
+              <div class="app-greeting">Good morning, Sarah</div>
+              <div class="app-sub-text">Liam's room needs attention</div>
+            </div>
+            <div class="app-notif">1</div>
+          </div>
+
+          <div class="scan-header">
+            <div class="scan-dot"></div>
+            <span>AI scanning room…</span>
+          </div>
+          <div class="room-preview">
+            <div class="room-grid">
+              <div class="room-item ri-1"></div>
+              <div class="room-item ri-2"></div>
+              <div class="room-item ri-3"></div>
+              <div class="room-item ri-4"></div>
+            </div>
+            <div class="scan-line"></div>
+            <div class="detect-box box-1"><span class="detect-label">Toys</span></div>
+            <div class="detect-box box-2"><span class="detect-label">Clothes</span></div>
+            <div class="detect-box box-3"><span class="detect-label">Books</span></div>
+          </div>
+
+          <div class="score-card">
+            <div class="score-info">
+              <div class="score-label">Cleanliness Score</div>
+              <div class="score-value">38%</div>
+            </div>
+            <div class="score-bar-wrap">
+              <div class="score-bar"></div>
+            </div>
+          </div>
+
+          <div class="task-list">
+            <div class="task-header-label">Tasks for Liam · Age 8</div>
+            <div class="task-item task-pending">
+              <span class="task-check">○</span>
+              <span>Pick up toys from floor</span>
+              <span class="task-pts">+10 pts</span>
+            </div>
+            <div class="task-item task-pending">
+              <span class="task-check">○</span>
+              <span>Fold clothes on chair</span>
+              <span class="task-pts">+15 pts</span>
+            </div>
+            <div class="task-item task-done">
+              <span class="task-check">✓</span>
+              <span>Clear desk surface</span>
+              <span class="task-pts done-pts">+10 pts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE COUNTER TICKER -->
+  <div class="ticker-bar">
+    <div class="ticker-live">
+      <span class="live-dot"></span> LIVE
+    </div>
+    <div class="ticker-text">
+      <span class="ticker-num" id="tickerCount">2,419</span> parents have joined the waitlist
+      <span class="ticker-sep">·</span>
+      Last signup <span class="ticker-time" id="lastSignup">just now</span>
+      <span class="ticker-sep">·</span>
+      <span class="ticker-accent">Spots filling fast</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats-strip">
+    <div class="stat">
+      <span class="stat-num" id="statCounter">2,419</span>
+      <span class="stat-label">Parents on waitlist</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">94%</span>
+      <span class="stat-label">Detection accuracy</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">&lt;3s</span>
+      <span class="stat-label">Scan time</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">5–16</span>
+      <span class="stat-label">Age range</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">0</span>
+      <span class="stat-label">Arguments needed</span>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="section-label">What it does</div>
+    <h2 class="section-title">Everything you need.<br />Nothing you don't.</h2>
+    <p class="section-sub">Six capabilities working together to make clean rooms the path of least resistance.</p>
+
+    <div class="features-grid">
+      <div class="feature-card feature-large">
+        <div class="feat-top-row">
+          <div class="feat-icon-wrap">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="feat-tag">Computer Vision</div>
+        </div>
+        <h3>Room Detection</h3>
+        <p>Snap a photo and our AI instantly maps every object — toys, clothes, dishes, clutter — building a precise before-state to compare after cleaning is done.</p>
+        <div class="feat-demo-strip">
+          <div class="fds-item"><div class="fds-dot" style="background:#6ee7b7"></div>Toys detected</div>
+          <div class="fds-item"><div class="fds-dot" style="background:#a78bfa"></div>Clothes mapped</div>
+          <div class="fds-item"><div class="fds-dot" style="background:#fbbf24"></div>Clutter scored</div>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feat-icon-wrap">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+            <path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Smart Tasks</h3>
+        <p>Age-appropriate checklists auto-generated from what the AI sees. Different tasks for a 6-year-old vs a teenager.</p>
+        <div class="feat-tag">Personalized</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feat-icon-wrap">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Fair Scoring</h3>
+        <p>Objective cleanliness scores eliminate "clean enough" debates. Both parent and child see the exact same data.</p>
+        <div class="feat-tag">Transparent</div>
+      </div>
+
+      <div class="feature-card feature-accent">
+        <div class="feat-icon-wrap">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Instant Verification</h3>
+        <p>Second scan confirms tasks are done. Streaks, rewards, and full history tracked automatically.</p>
+        <div class="feat-tag">Real-time</div>
+      </div>
+
+      <div class="feature-card feature-wide">
+        <div class="feat-icon-wrap">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Multi-child Profiles</h3>
+        <p>Manage all your kids from one dashboard. Each child gets their own profile, task history, streak calendar, and reward system — tracked separately and fairly.</p>
+        <div class="feat-tag">Family Plan</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feat-icon-wrap">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Reward Engine</h3>
+        <p>Points, streaks, and badges keep kids motivated. You set the rules — they earn the rewards.</p>
+        <div class="feat-tag">Gamified</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works" id="how">
+    <div class="section-label">The process</div>
+    <h2 class="section-title">Simple enough for<br />a 6-year-old</h2>
+    <p class="section-sub">The whole loop — scan, clean, verify — takes under 5 minutes.</p>
+
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num-wrap">
+          <div class="step-num">01</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <h4>Snap the room</h4>
+          <p>Parent takes a quick photo through the app. No setup or special lighting needed.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num-wrap">
+          <div class="step-num">02</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h4>AI analyzes</h4>
+          <p>Computer vision scans, identifies objects, and scores the room in under 3 seconds.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num-wrap">
+          <div class="step-num">03</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="9" y1="13" x2="15" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="9" y1="17" x2="12" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h4>Kid gets tasks</h4>
+          <p>Child sees their personalized checklist — specific to their age and exactly what AI saw.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num-wrap">
+          <div class="step-num">04</div>
+        </div>
+        <div class="step-content">
+          <div class="step-icon step-icon-accent">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="22 4 12 14.01 9 11.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h4>AI confirms it's done</h4>
+          <p>Second scan compares before/after. Score improves. Points awarded. No argument.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section class="demo-section" id="demo">
+    <div class="section-label">Try it live</div>
+    <h2 class="section-title">See the AI in action</h2>
+    <p class="section-sub">Upload a photo of any room. Real object detection runs entirely in your browser — no data leaves your device.</p>
+
+    <div class="demo-card">
+      <div class="demo-upload-area" id="uploadArea">
+        <input type="file" id="imageUpload" accept="image/*" hidden />
+        <div class="upload-prompt" id="uploadPrompt">
+          <div class="upload-icon">
+            <svg width="32" height="32" fill="none" viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="17 8 12 3 7 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p>Drop a room photo here or <button type="button" class="link-btn" onclick="document.getElementById('imageUpload').click()">browse files</button></p>
+          <span class="upload-hint">JPG, PNG — any messy room works · Runs 100% in your browser</span>
+        </div>
+        <div class="image-container" id="imageContainer" style="display:none">
+          <img id="uploadedImage" alt="Uploaded room" />
+          <canvas id="detectionCanvas"></canvas>
+          <div class="scan-overlay" id="scanOverlay">
+            <div class="demo-scan-line" id="demoScanLine"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-results" id="demoResults" style="display:none">
+        <div class="result-top">
+          <div class="result-score-wrap">
+            <div class="result-label">Cleanliness Score</div>
+            <div class="result-score-bar-track">
+              <div class="result-score-bar" id="resultScoreBar"></div>
+            </div>
+            <div class="result-score-num" id="resultScoreNum">–</div>
+          </div>
+          <button class="rescan-btn" id="rescanBtn">Scan again</button>
+        </div>
+        <div class="detected-items" id="detectedItems"></div>
+        <div class="task-sug-header">Suggested tasks</div>
+        <div class="task-suggestions" id="taskSuggestions"></div>
+      </div>
+
+      <div class="demo-loading" id="demoLoading" style="display:none">
+        <div class="loader"></div>
+        <span id="loadingText">Loading AI model…</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section" id="testimonials">
+    <div class="section-label">What parents say</div>
+    <h2 class="section-title">Real feedback from<br />our beta testers</h2>
+
+    <div class="testimonials-grid">
+      <div class="testi-card testi-featured">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"My son actually looks forward to cleaning now because he wants to beat his score. I never thought I'd say this, but the AI has ended our biggest daily argument."</p>
+        <div class="testi-author">
+          <div class="testi-avatar ta-1">L</div>
+          <div>
+            <div class="testi-name">Laura M.</div>
+            <div class="testi-role">Mom of 2, Berlin</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The before/after verification is genius. My daughter used to stuff everything under the bed — now she knows the AI will catch it."</p>
+        <div class="testi-author">
+          <div class="testi-avatar ta-2">J</div>
+          <div>
+            <div class="testi-name">James K.</div>
+            <div class="testi-role">Dad of 3, London</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★☆</div>
+        <p class="testi-quote">"Setup took 2 minutes. The age-appropriate tasks are spot on — what it assigns my 7-year-old vs my 12-year-old is completely different and perfectly calibrated."</p>
+        <div class="testi-author">
+          <div class="testi-avatar ta-3">A</div>
+          <div>
+            <div class="testi-name">Anika R.</div>
+            <div class="testi-role">Mom of 2, Amsterdam</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"As a teacher I was skeptical, but this is genuinely educational. Kids learn accountability through data they can actually see and understand themselves."</p>
+        <div class="testi-author">
+          <div class="testi-avatar ta-4">P</div>
+          <div>
+            <div class="testi-name">Paula T.</div>
+            <div class="testi-role">Teacher & mom, Madrid</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing-section" id="pricing">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Simple, honest pricing</h2>
+    <p class="section-sub">Lock in early-access rates before we launch. Upgrade or cancel anytime.</p>
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-tier">Free</div>
+        <div class="pricing-price">$0<span>/mo</span></div>
+        <div class="pricing-desc">Perfect for trying it out</div>
+        <ul class="pricing-features">
+          <li><span class="pf-check">✓</span>1 child profile</li>
+          <li><span class="pf-check">✓</span>5 scans per month</li>
+          <li><span class="pf-check">✓</span>Basic task suggestions</li>
+          <li><span class="pf-check">✓</span>7-day scan history</li>
+        </ul>
+        <a href="#waitlist" class="btn-outline">Join waitlist</a>
+      </div>
+
+      <div class="pricing-card pricing-popular">
+        <div class="pricing-popular-badge">Most popular</div>
+        <div class="pricing-tier">Family</div>
+        <div class="pricing-price">$7<span>/mo</span></div>
+        <div class="pricing-desc">For the whole household</div>
+        <ul class="pricing-features">
+          <li><span class="pf-check">✓</span>Up to 4 child profiles</li>
+          <li><span class="pf-check">✓</span>Unlimited scans</li>
+          <li><span class="pf-check">✓</span>Smart AI task generation</li>
+          <li><span class="pf-check">✓</span>Full history + analytics</li>
+          <li><span class="pf-check">✓</span>Reward & streak system</li>
+          <li><span class="pf-check">✓</span>Priority support</li>
+        </ul>
+        <a href="#waitlist" class="btn-primary pricing-btn">Get early access</a>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-tier">Pro</div>
+        <div class="pricing-price">$14<span>/mo</span></div>
+        <div class="pricing-desc">For power users & educators</div>
+        <ul class="pricing-features">
+          <li><span class="pf-check">✓</span>Unlimited child profiles</li>
+          <li><span class="pf-check">✓</span>Unlimited scans</li>
+          <li><span class="pf-check">✓</span>Custom reward rules</li>
+          <li><span class="pf-check">✓</span>Parent dashboard + reports</li>
+          <li><span class="pf-check">✓</span>Multi-device sync</li>
+          <li><span class="pf-check">✓</span>Early access to new features</li>
+        </ul>
+        <a href="#waitlist" class="btn-outline">Join waitlist</a>
+      </div>
+    </div>
+    <p class="pricing-note">
+      <span class="pn-icon">★</span>
+      Early waitlist members get <strong>3 months free</strong> on any paid plan — no credit card required.
+    </p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="section-label">Questions</div>
+    <h2 class="section-title">Frequently asked</h2>
+
+    <div class="faq-grid">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What age range does ParentAI work for?
+          <span class="faq-arrow">↓</span>
+        </button>
+        <div class="faq-a">
+          <p>ParentAI is designed for children aged 5 to 16. Task complexity adapts automatically — a 6-year-old gets simple, clear tasks while a 14-year-old gets more detailed expectations.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is my data private? Does the AI store room photos?
+          <span class="faq-arrow">↓</span>
+        </button>
+        <div class="faq-a">
+          <p>In the live demo, all processing happens in your browser — no images are sent anywhere. In the full app, photos are processed on-device and only anonymized scores sync to our servers. We never store or share room photos.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How accurate is the room detection?
+          <span class="faq-arrow">↓</span>
+        </button>
+        <div class="faq-a">
+          <p>Our model achieves 94% accuracy on standard room conditions. It performs best in normal lighting with a wide-angle shot from the doorway. We continuously retrain on more room types with every update.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Can kids game the system?
+          <span class="faq-arrow">↓</span>
+        </button>
+        <div class="faq-a">
+          <p>We've specifically designed against this. The AI compares before and after states at the object level — stuffing things under the bed won't improve the score if those objects were visible in the original scan.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          When does the full app launch?
+          <span class="faq-arrow">↓</span>
+        </button>
+        <div class="faq-a">
+          <p>We're targeting Q3 2026 for iOS and Android. Waitlist members get beta access from Q2. Join now to lock in early-access pricing.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Does it work for multiple kids sharing a room?
+          <span class="faq-arrow">↓</span>
+        </button>
+        <div class="faq-a">
+          <p>Yes — you can assign tasks from a single scan to multiple children. Each child sees only their tasks, and the AI tracks their individual contributions to the overall room score.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAITLIST -->
+  <section class="waitlist-section" id="waitlist">
+    <div class="waitlist-card">
+      <div class="wl-live-row">
+        <span class="live-dot"></span>
+        <span class="wl-live-text"><strong id="wlCounter">2,419</strong> parents already joined</span>
+      </div>
+      <div class="wl-badge">Early Access Open · Q3 2026</div>
+      <h2>Be first to raise<br />a tidier kid.</h2>
+      <p>Join the waitlist and get 3 months free when we launch. No credit card needed.</p>
+
+      <div class="email-wrapper">
+        <form class="hero-form" id="waitlist-form" novalidate>
+          <div class="input-group">
+            <input type="email" placeholder="your@email.com" class="email-input" id="wlEmail" autocomplete="email" />
+            <div class="email-status" id="wlEmailStatus"></div>
+          </div>
+          <button type="submit" class="btn-primary" id="wlBtn">Get Early Access</button>
+        </form>
+        <div class="email-feedback" id="wlFeedback"></div>
+      </div>
+
+      <p class="form-note">Free forever for early members · No spam · Unsubscribe anytime</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="logo.png" alt="ParentAI" class="logo-img" />
+            <span>ParentAI</span>
+          </div>
+          <p class="footer-tagline">Teaching kids responsibility,<br />one clean room at a time.</p>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <div class="footer-col-title">Product</div>
+            <a href="#features">Features</a>
+            <a href="#how">How it works</a>
+            <a href="#demo">Live demo</a>
+            <a href="#pricing">Pricing</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Company</div>
+            <a href="#">About</a>
+            <a href="#">Blog</a>
+            <a href="#">Press kit</a>
+            <a href="#">Contact</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Legal</div>
+            <a href="#">Privacy policy</a>
+            <a href="#">Terms of service</a>
+            <a href="#">Cookie policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 ParentAI. All rights reserved.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-link">Twitter</a>
+          <a href="#" class="social-link">Instagram</a>
+          <a href="#" class="social-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="ai-demo.js"></script>
+</body>
+</html>
