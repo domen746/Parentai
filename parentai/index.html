@@ -93,32 +93,22 @@
             <div class="scan-dot"></div>
             <span>AI scanning room…</span>
           </div>
-          <div class="room-preview">
-            <div class="room-scene">
-              <div class="room-obj room-bed"></div>
-              <div class="room-obj room-pillow"></div>
-              <div class="room-obj room-desk"></div>
-              <div class="room-obj room-toy-1"></div>
-              <div class="room-obj room-toy-2"></div>
-              <div class="room-obj room-toy-3"></div>
-              <div class="room-obj room-clothes-pile"></div>
-              <div class="room-obj room-book-1"></div>
-              <div class="room-obj room-book-2"></div>
-            </div>
+          <div class="room-preview room-preview-real">
+            <img src="messy.png" alt="Messy room scan" class="room-real-img" />
             <div class="scan-line"></div>
-            <div class="detect-box box-1"><span class="detect-label">Toys</span></div>
-            <div class="detect-box box-2"><span class="detect-label">Clothes</span></div>
-            <div class="detect-box box-3"><span class="detect-label">Books</span></div>
-            <div class="detect-box box-4"><span class="detect-label">Bed</span></div>
+            <div class="detect-box box-clothes"><span class="detect-label">Clothes 87%</span></div>
+            <div class="detect-box box-teddy"><span class="detect-label">Teddy 95%</span></div>
+            <div class="detect-box box-shoes"><span class="detect-label">Shoes 81%</span></div>
+            <div class="detect-box box-bag"><span class="detect-label">Bag 74%</span></div>
           </div>
 
           <div class="score-card">
             <div class="score-info">
               <div class="score-label">Cleanliness Score</div>
-              <div class="score-value">38%</div>
+              <div class="score-value">18%</div>
             </div>
             <div class="score-bar-wrap">
-              <div class="score-bar"></div>
+              <div class="score-bar score-bar-low"></div>
             </div>
           </div>
 
@@ -126,21 +116,34 @@
             <div class="task-header-label">Tasks for Liam · Age 8</div>
             <div class="task-item task-pending">
               <span class="task-check">○</span>
-              <span>Pick up toys from floor</span>
-              <span class="task-pts">+10 pts</span>
+              <span>Pick up clothes from floor</span>
+              <span class="task-pts">+20 pts</span>
             </div>
             <div class="task-item task-pending">
               <span class="task-check">○</span>
-              <span>Fold clothes on chair</span>
+              <span>Make the bed</span>
               <span class="task-pts">+15 pts</span>
+            </div>
+            <div class="task-item task-pending">
+              <span class="task-check">○</span>
+              <span>Put shoes in closet</span>
+              <span class="task-pts">+10 pts</span>
             </div>
             <div class="task-item task-done">
               <span class="task-check">✓</span>
-              <span>Clear desk surface</span>
+              <span>Organize shelf items</span>
               <span class="task-pts done-pts">+10 pts</span>
             </div>
           </div>
         </div>
+      </div>
+      <div class="phone-mode-toggle">
+        <span class="mode-label mode-label-light active">☀️</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="phoneDarkToggle" />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="mode-label mode-label-dark">🌙</span>
       </div>
     </div>
   </section>
@@ -347,6 +350,45 @@
           </div>
           <h4>AI confirms it's done</h4>
           <p>Second scan compares before/after. Score improves. Points awarded. No argument.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEFORE / AFTER SLIDER -->
+  <section class="ba-section" id="compare">
+    <div class="section-label">The difference</div>
+    <h2 class="section-title">Before &amp; after.<br />Slide to compare.</h2>
+    <p class="section-sub">See the transformation. Drag the slider to reveal the clean room.</p>
+
+    <div class="ba-container">
+      <div class="ba-wrapper" id="baWrapper">
+        <div class="ba-after">
+          <img src="clean.jpg" alt="Clean room" onerror="this.src='messy.png'; this.parentElement.classList.add('ba-filter-clean')" />
+          <div class="ba-label ba-label-after">After</div>
+        </div>
+        <div class="ba-before" id="baBefore">
+          <img src="messy.png" alt="Messy room" />
+          <div class="ba-label ba-label-before">Before</div>
+        </div>
+        <div class="ba-handle" id="baHandle">
+          <div class="ba-handle-line"></div>
+          <div class="ba-handle-circle">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+              <path d="M8 5l-5 7 5 7M16 5l5 7-5 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="ba-handle-line"></div>
+        </div>
+      </div>
+      <div class="ba-scores">
+        <div class="ba-score ba-score-before">
+          <span class="ba-score-num">18%</span>
+          <span class="ba-score-text">Cleanliness</span>
+        </div>
+        <div class="ba-score ba-score-after">
+          <span class="ba-score-num">96%</span>
+          <span class="ba-score-text">Cleanliness</span>
         </div>
       </div>
     </div>

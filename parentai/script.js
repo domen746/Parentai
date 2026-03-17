@@ -290,6 +290,67 @@ document.querySelectorAll(
   observer.observe(el);
 });
 
+// ─── Phone dark/light mode toggle ─────────────────
+const darkToggle = document.getElementById('phoneDarkToggle');
+const phoneMockup = document.querySelector('.phone-mockup');
+const lightLabel = document.querySelector('.mode-label-light');
+const darkLabel = document.querySelector('.mode-label-dark');
+
+if (darkToggle && phoneMockup) {
+  darkToggle.addEventListener('change', () => {
+    phoneMockup.classList.toggle('dark-mode', darkToggle.checked);
+    lightLabel?.classList.toggle('active', !darkToggle.checked);
+    darkLabel?.classList.toggle('active', darkToggle.checked);
+  });
+}
+
+// ─── Before / After slider ────────────────────────
+const baWrapper = document.getElementById('baWrapper');
+const baBefore = document.getElementById('baBefore');
+const baHandle = document.getElementById('baHandle');
+
+if (baWrapper && baBefore && baHandle) {
+  let isDragging = false;
+
+  function updateSlider(x) {
+    const rect = baWrapper.getBoundingClientRect();
+    let pos = (x - rect.left) / rect.width;
+    pos = Math.max(0.05, Math.min(0.95, pos));
+    const pct = pos * 100;
+    baBefore.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+    baHandle.style.left = `${pct}%`;
+  }
+
+  baWrapper.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    updateSlider(e.clientX);
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    updateSlider(e.clientX);
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  baWrapper.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    updateSlider(e.touches[0].clientX);
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    updateSlider(e.touches[0].clientX);
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => {
+    isDragging = false;
+  });
+}
+
 // ─── Demo: drag & drop ────────────────────────────
 const uploadArea = document.getElementById('uploadArea');
 
