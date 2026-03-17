@@ -387,3 +387,156 @@ document.getElementById('rescanBtn')?.addEventListener('click', () => {
   const fi = document.getElementById('imageUpload');
   if (fi) fi.value = '';
 });
+
+// ─── Count-up animation ───────────────────────────
+const countUpObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    if (el.dataset.counted) return;
+    el.dataset.counted = '1';
+
+    const text = el.textContent.trim();
+    const match = text.match(/^([\d,]+)/);
+    if (!match) return;
+
+    const target = parseInt(match[1].replace(/,/g, ''), 10);
+    if (isNaN(target)) return;
+    const suffix = text.replace(match[1], '');
+    const duration = 1600;
+    const start = performance.now();
+
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(target * ease);
+      el.textContent = current.toLocaleString('en-US') + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    el.textContent = '0' + suffix;
+    requestAnimationFrame(tick);
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.stat-num').forEach(el => countUpObserver.observe(el));
+
+// ─── Navbar active section highlight ──────────────
+const navSections = document.querySelectorAll('section[id]');
+const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+
+function updateActiveNav() {
+  let current = '';
+  navSections.forEach(section => {
+    const top = section.offsetTop - 120;
+    if (window.scrollY >= top) current = section.id;
+  });
+  navAnchors.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+
+// ─── Mouse parallax on hero orbs ──────────────────
+const heroBg = document.querySelector('.hero-bg');
+if (heroBg) {
+  const orbs = heroBg.querySelectorAll('.orb');
+  document.addEventListener('mousemove', (e) => {
+    const cx = (e.clientX / window.innerWidth - 0.5) * 2;
+    const cy = (e.clientY / window.innerHeight - 0.5) * 2;
+    orbs.forEach((orb, i) => {
+      const strength = (i + 1) * 12;
+      orb.style.transform = `translate(${cx * strength}px, ${cy * strength}px)`;
+    });
+  });
+}
+
+// ─── Back to top button ───────────────────────────
+const backToTop = document.getElementById('backToTop');
+if (backToTop) {
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('visible', window.scrollY > 600);
+  }, { passive: true });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+// ─── Typing effect on hero subtitle ───────────────
+const heroSub = document.querySelector('.hero-sub');
+if (heroSub) {
+  const fullText = heroSub.textContent;
+  heroSub.textContent = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'typing-cursor';
+  heroSub.appendChild(cursor);
+  let i = 0;
+  function typeChar() {
+    if (i < fullText.length) {
+      heroSub.insertBefore(document.createTextNode(fullText[i]), cursor);
+      i++;
+      setTimeout(typeChar, 22);
+    } else {
+      setTimeout(() => cursor.remove(), 2000);
+    }
+  }
+  // Start typing when hero is visible
+  const heroObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      setTimeout(typeChar, 400);
+      heroObserver.disconnect();
+    }
+  });
+  heroObserver.observe(heroSub);
+}
+
+// ─── Testimonial auto-scroll on mobile ────────────
+const testiGrid = document.querySelector('.testimonials-grid');
+const testiDots = document.getElementById('testiDots');
+
+if (testiGrid && testiDots) {
+  const cards = testiGrid.querySelectorAll('.testi-card');
+
+  // Create dots
+  cards.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'testi-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to review ' + (i + 1));
+    dot.addEventListener('click', () => {
+      cards[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    });
+    testiDots.appendChild(dot);
+  });
+
+  const dots = testiDots.querySelectorAll('.testi-dot');
+
+  // Update dots on scroll
+  testiGrid.addEventListener('scroll', () => {
+    const scrollLeft = testiGrid.scrollLeft;
+    const cardWidth = cards[0]?.offsetWidth || 1;
+    const idx = Math.round(scrollLeft / (cardWidth + 16));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }, { passive: true });
+
+  // Auto-scroll every 4s on mobile
+  let autoTimer;
+  function startAutoScroll() {
+    if (window.innerWidth > 900) return;
+    let idx = 0;
+    autoTimer = setInterval(() => {
+      idx = (idx + 1) % cards.length;
+      cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }, 4000);
+  }
+
+  function stopAutoScroll() { clearInterval(autoTimer); }
+
+  testiGrid.addEventListener('touchstart', stopAutoScroll, { passive: true });
+  testiGrid.addEventListener('touchend', () => setTimeout(startAutoScroll, 8000), { passive: true });
+
+  if (window.innerWidth <= 900) startAutoScroll();
+  window.addEventListener('resize', () => {
+    stopAutoScroll();
+    if (window.innerWidth <= 900) startAutoScroll();
+  });
+}
