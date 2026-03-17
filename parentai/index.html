@@ -20,7 +20,6 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="#features">Features</a></li>
       <li><a href="#how">How it works</a></li>
-      <li><a href="#demo">Demo</a></li>
       <li><a href="#testimonials">Reviews</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#waitlist" class="nav-cta">Get Early Access</a></li>
@@ -79,7 +78,7 @@
     <div class="hero-visual">
       <div class="phone-glow"></div>
       <div class="phone-mockup">
-        <div class="phone-notch"></div>
+        <div class="phone-dynamic-island"></div>
         <div class="phone-screen">
           <div class="app-header">
             <div class="app-avatar">P</div>
@@ -95,16 +94,22 @@
             <span>AI scanning room…</span>
           </div>
           <div class="room-preview">
-            <div class="room-grid">
-              <div class="room-item ri-1"></div>
-              <div class="room-item ri-2"></div>
-              <div class="room-item ri-3"></div>
-              <div class="room-item ri-4"></div>
+            <div class="room-scene">
+              <div class="room-obj room-bed"></div>
+              <div class="room-obj room-pillow"></div>
+              <div class="room-obj room-desk"></div>
+              <div class="room-obj room-toy-1"></div>
+              <div class="room-obj room-toy-2"></div>
+              <div class="room-obj room-toy-3"></div>
+              <div class="room-obj room-clothes-pile"></div>
+              <div class="room-obj room-book-1"></div>
+              <div class="room-obj room-book-2"></div>
             </div>
             <div class="scan-line"></div>
             <div class="detect-box box-1"><span class="detect-label">Toys</span></div>
             <div class="detect-box box-2"><span class="detect-label">Clothes</span></div>
             <div class="detect-box box-3"><span class="detect-label">Books</span></div>
+            <div class="detect-box box-4"><span class="detect-label">Bed</span></div>
           </div>
 
           <div class="score-card">
@@ -343,58 +348,6 @@
           <h4>AI confirms it's done</h4>
           <p>Second scan compares before/after. Score improves. Points awarded. No argument.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DEMO -->
-  <section class="demo-section" id="demo">
-    <div class="section-label">Try it live</div>
-    <h2 class="section-title">See the AI in action</h2>
-    <p class="section-sub">Upload a photo of any room. Real object detection runs entirely in your browser — no data leaves your device.</p>
-
-    <div class="demo-card">
-      <div class="demo-upload-area" id="uploadArea">
-        <input type="file" id="imageUpload" accept="image/*" hidden />
-        <div class="upload-prompt" id="uploadPrompt">
-          <div class="upload-icon">
-            <svg width="32" height="32" fill="none" viewBox="0 0 24 24">
-              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <polyline points="17 8 12 3 7 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <p>Drop a room photo here or <button type="button" class="link-btn" onclick="document.getElementById('imageUpload').click()">browse files</button></p>
-          <span class="upload-hint">JPG, PNG — any messy room works · Runs 100% in your browser</span>
-        </div>
-        <div class="image-container" id="imageContainer" style="display:none">
-          <img id="uploadedImage" alt="Uploaded room" />
-          <canvas id="detectionCanvas"></canvas>
-          <div class="scan-overlay" id="scanOverlay">
-            <div class="demo-scan-line" id="demoScanLine"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="demo-results" id="demoResults" style="display:none">
-        <div class="result-top">
-          <div class="result-score-wrap">
-            <div class="result-label">Cleanliness Score</div>
-            <div class="result-score-bar-track">
-              <div class="result-score-bar" id="resultScoreBar"></div>
-            </div>
-            <div class="result-score-num" id="resultScoreNum">–</div>
-          </div>
-          <button class="rescan-btn" id="rescanBtn">Scan again</button>
-        </div>
-        <div class="detected-items" id="detectedItems"></div>
-        <div class="task-sug-header">Suggested tasks</div>
-        <div class="task-suggestions" id="taskSuggestions"></div>
-      </div>
-
-      <div class="demo-loading" id="demoLoading" style="display:none">
-        <div class="loader"></div>
-        <span id="loadingText">Loading AI model…</span>
       </div>
     </div>
   </section>
@@ -647,6 +600,5 @@
   </footer>
 
   <script src="script.js"></script>
-  <script src="ai-demo.js"></script>
 </body>
 </html>
