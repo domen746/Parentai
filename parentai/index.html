@@ -4,7 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ParentAI — Clean Room, No Argument</title>
-  <link rel="icon" href="logo.png" />
+  <meta name="description" content="ParentAI uses computer vision to scan messy rooms, assign age-appropriate tasks, and verify they're done. No more arguments — join 2,400+ parents on the waitlist." />
+  <meta name="keywords" content="parenting app, AI room scanner, kids cleaning, chore tracker, family productivity" />
+  <meta name="author" content="ParentAI" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="ParentAI — Your kid cleans. AI verifies." />
+  <meta property="og:description" content="Computer vision scans messy rooms, assigns tasks, and confirms they're done. Join the waitlist for early access." />
+  <meta property="og:image" content="logo.png" />
+  <meta property="og:url" content="https://parentai.app" />
+  <meta property="og:site_name" content="ParentAI" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ParentAI — Your kid cleans. AI verifies." />
+  <meta name="twitter:description" content="AI-powered room scanning for parents. No more clean-enough debates." />
+  <meta name="twitter:image" content="logo.png" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="logo.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="logo.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="logo.png" />
+  <meta name="theme-color" content="#2563eb" />
+
+  <!-- Analytics -->
+  <script defer data-domain="parentai.app" src="https://plausible.io/js/script.js"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
@@ -20,6 +46,7 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="#features">Features</a></li>
       <li><a href="#how">How it works</a></li>
+      <li><a href="#compare">Before & After</a></li>
       <li><a href="#testimonials">Reviews</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#waitlist" class="nav-cta">Get Early Access</a></li>
@@ -94,7 +121,10 @@
             <span>AI scanning room…</span>
           </div>
           <div class="room-preview room-preview-real">
-            <img src="messy.png" alt="Messy room scan" class="room-real-img" />
+            <picture>
+              <source srcset="messy.webp" type="image/webp" />
+              <img src="messy.png" alt="Messy room scan" class="room-real-img" />
+            </picture>
             <div class="scan-line"></div>
             <div class="detect-box box-clothes"><span class="detect-label">Clothes 87%</span></div>
             <div class="detect-box box-teddy"><span class="detect-label">Teddy 95%</span></div>
@@ -364,11 +394,17 @@
     <div class="ba-container">
       <div class="ba-wrapper" id="baWrapper">
         <div class="ba-after">
-          <img src="clean.jpg" alt="Clean room" onerror="this.src='messy.png'; this.parentElement.classList.add('ba-filter-clean')" />
+          <picture>
+            <source srcset="clean.webp" type="image/webp" />
+            <img src="clean.jpg" alt="Clean room" loading="lazy" />
+          </picture>
           <div class="ba-label ba-label-after">After</div>
         </div>
         <div class="ba-before" id="baBefore">
-          <img src="messy.png" alt="Messy room" />
+          <picture>
+            <source srcset="messy.webp" type="image/webp" />
+            <img src="messy.png" alt="Messy room" loading="lazy" />
+          </picture>
           <div class="ba-label ba-label-before">Before</div>
         </div>
         <div class="ba-handle" id="baHandle">
@@ -391,6 +427,11 @@
           <span class="ba-score-text">Cleanliness</span>
         </div>
       </div>
+
+      <div class="ba-cta">
+        <p>Impressed? Join the waitlist and try it yourself.</p>
+        <a href="#waitlist" class="btn-primary">Get Early Access</a>
+      </div>
     </div>
   </section>
 
@@ -398,6 +439,7 @@
   <section class="testimonials-section" id="testimonials">
     <div class="section-label">What parents say</div>
     <h2 class="section-title">Real feedback from<br />our beta testers</h2>
+    <p class="section-sub testi-disclaimer">Based on early beta tester feedback. Names shortened for privacy.</p>
 
     <div class="testimonials-grid">
       <div class="testi-card testi-featured">
@@ -612,7 +654,7 @@
             <div class="footer-col-title">Product</div>
             <a href="#features">Features</a>
             <a href="#how">How it works</a>
-            <a href="#demo">Live demo</a>
+            <a href="#compare">Before & After</a>
             <a href="#pricing">Pricing</a>
           </div>
           <div class="footer-col">
@@ -624,9 +666,9 @@
           </div>
           <div class="footer-col">
             <div class="footer-col-title">Legal</div>
-            <a href="#">Privacy policy</a>
-            <a href="#">Terms of service</a>
-            <a href="#">Cookie policy</a>
+            <a href="privacy.html">Privacy policy</a>
+            <a href="terms.html">Terms of service</a>
+            <a href="privacy.html#cookies">Cookie policy</a>
           </div>
         </div>
       </div>

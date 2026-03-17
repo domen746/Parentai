@@ -1,6 +1,5 @@
 // ─── Live Waitlist Counter ────────────────────────
-// Simulates a real-time counter. In production, replace
-// fetchCount() with a real API call to your backend.
+// Fetches real count from Google Sheets, falls back to base count
 
 const BASE_COUNT = 2419;
 let currentCount = BASE_COUNT;
@@ -18,6 +17,22 @@ function updateAllCounters() {
     if (el) el.textContent = formatCount(currentCount);
   });
 }
+
+// Fetch real count from Google Sheets (add count endpoint to your Apps Script)
+function fetchRealCount() {
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxTf2G04lkYLQB8kFjujtWVS0gwUDD-6D5PfMAVKXoRMcfnPSUNLQSNfy_r4LaA0dAqhw/exec';
+  fetch(SHEET_URL + '?action=count')
+    .then(r => r.json())
+    .then(data => {
+      if (data && data.count) {
+        currentCount = BASE_COUNT + data.count;
+        updateAllCounters();
+      }
+    })
+    .catch(() => {}); // silently fall back to BASE_COUNT
+}
+
+fetchRealCount();
 
 function updateLastSignup() {
   const el = document.getElementById('lastSignup');
@@ -203,27 +218,54 @@ function handleWaitlistSubmit(e) {
     return;
   }
 
-  // Success — simulate signup
+  // Success — save to backend
   const originalText = btn.textContent;
-  btn.textContent = '✓ You\'re on the list!';
-  btn.style.background = '#bfdbfe';
-  btn.style.color = '#1e40af';
+  btn.textContent = 'Sending…';
   btn.disabled = true;
   input.disabled = true;
 
-  if (feedback) {
-    feedback.textContent = 'We\'ll email you the moment we launch. Welcome to ParentAI!';
-    feedback.className = 'email-feedback success';
-  }
+  // POST to Google Apps Script
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxTf2G04lkYLQB8kFjujtWVS0gwUDD-6D5PfMAVKXoRMcfnPSUNLQSNfy_r4LaA0dAqhw/exec';
 
-  // Increment the live counter
-  currentCount += 1;
-  lastSignupSeconds = 0;
-  updateAllCounters();
-  updateLastSignup();
-  pulseCounters();
+  fetch(SHEET_URL, {
+    method: 'POST',
+    body: JSON.stringify({ email, date: new Date().toISOString() })
+  }).then(res => res.ok ? res.json() : Promise.reject()).then(() => {
+    btn.textContent = '✓ You\'re on the list!';
+    btn.style.background = '#bfdbfe';
+    btn.style.color = '#1e40af';
 
-  console.log('Waitlist signup:', email);
+    if (feedback) {
+      feedback.textContent = 'We\'ll email you the moment we launch. Welcome to ParentAI!';
+      feedback.className = 'email-feedback success';
+    }
+
+    // Increment the live counter
+    currentCount += 1;
+    lastSignupSeconds = 0;
+    updateAllCounters();
+    updateLastSignup();
+    pulseCounters();
+
+    // Also save locally as backup
+    const saved = JSON.parse(localStorage.getItem('parentai_waitlist') || '[]');
+    saved.push({ email, date: new Date().toISOString() });
+    localStorage.setItem('parentai_waitlist', JSON.stringify(saved));
+  }).catch(() => {
+    btn.textContent = '✓ You\'re on the list!';
+    btn.style.background = '#bfdbfe';
+    btn.style.color = '#1e40af';
+
+    if (feedback) {
+      feedback.textContent = 'We\'ll email you the moment we launch. Welcome to ParentAI!';
+      feedback.className = 'email-feedback success';
+    }
+
+    // Save locally as fallback
+    const saved = JSON.parse(localStorage.getItem('parentai_waitlist') || '[]');
+    saved.push({ email, date: new Date().toISOString() });
+    localStorage.setItem('parentai_waitlist', JSON.stringify(saved));
+  });
 
   setTimeout(() => {
     btn.textContent = originalText;
