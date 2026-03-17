@@ -1,3 +1,7 @@
+// ─── Scroll to top on load ────────────────────────
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
 // ─── Live Waitlist Counter ────────────────────────
 
 const BASE_COUNT = 2419;
