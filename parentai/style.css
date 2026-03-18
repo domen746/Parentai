@@ -4095,4 +4095,226 @@ body.dark-mode .exit-intent-modal {
 body.dark-mode .explore-tracker .et-ring-bg {
   stroke: var(--border);
 }
+
+/* ═══════════════════════════════════════════════════
+   10 IMPROVEMENTS
+   ═══════════════════════════════════════════════════ */
+
+/* ─── 1. Scroll-linked transparent → solid navbar ── */
+.navbar.navbar-transparent {
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  border-bottom: 1px solid transparent;
+}
+
+.navbar.navbar-transparent.scrolled {
+  background: rgba(240,246,255,0.92);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+body.dark-mode .navbar.navbar-transparent {
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  border-bottom-color: transparent;
+}
+
+body.dark-mode .navbar.navbar-transparent.scrolled {
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 var(--border);
+  border-bottom-color: var(--border);
+}
+
+/* Shrink navbar on scroll */
+.navbar.scrolled {
+  height: 52px;
+}
+
+.navbar.scrolled .logo-img {
+  width: 24px;
+  height: 24px;
+}
+
+.navbar .logo-img {
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.navbar {
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ─── 2. Stat count-up already exists — enhance with scale pop ── */
+.stat-num {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* ─── 3. Testimonial swipe/carousel on mobile ────── */
+@media (max-width: 900px) {
+  .testimonials-grid {
+    scroll-padding: 0 8%;
+    scrollbar-width: none;
+  }
+
+  .testimonials-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .testi-scroll-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .testi-scroll-dots .dot.active {
+    background: var(--accent);
+    transform: scale(1.3);
+  }
+}
+
+/* ─── 4. CTA button pulse glow ───────────────────── */
+.btn-primary {
+  position: relative;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 16px rgba(37,99,235,0.4);
+  opacity: 0;
+  animation: ctaPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes ctaPulse {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+
+.btn-primary:hover::after {
+  animation: none;
+  opacity: 0;
+}
+
+body.dark-mode .btn-primary::after {
+  box-shadow: 0 0 20px rgba(96,165,250,0.5);
+}
+
+/* ─── 5. Lazy blur-up for BA images ──────────────── */
+.ba-wrapper img {
+  transition: filter 0.6s ease, opacity 0.6s ease;
+}
+
+.ba-wrapper img[loading="lazy"] {
+  filter: blur(0);
+}
+
+/* ─── 6. FAQ smooth open/close (enhance existing) ── */
+.faq-a {
+  transition: grid-template-rows 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.faq-a p {
+  transition: opacity 0.3s ease 0.05s;
+}
+
+.faq-item:not(.open) .faq-a p {
+  opacity: 0;
+}
+
+.faq-item.open .faq-a p {
+  opacity: 1;
+}
+
+/* ─── 7. Sticky section headers on mobile ────────── */
+@media (max-width: 768px) {
+  .section-label {
+    position: sticky;
+    top: 56px;
+    z-index: 10;
+    background: var(--bg);
+    padding: 6px 0;
+    margin-bottom: 8px;
+  }
+
+  body.dark-mode .section-label {
+    background: var(--bg);
+  }
+}
+
+/* ─── 8. Feature card icon hover animation ───────── */
+.feat-icon-wrap {
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), background 0.3s ease, color 0.3s ease;
+}
+
+.feature-card:hover .feat-icon-wrap {
+  transform: scale(1.15) rotate(-8deg);
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ─── 9. Popular pricing card float + gradient glow ─ */
+.pricing-popular {
+  animation: popularFloat 3.5s ease-in-out infinite;
+}
+
+@keyframes popularFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.pricing-popular:hover {
+  animation-play-state: paused;
+}
+
+.pricing-popular::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: calc(var(--radius) + 2px);
+  background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(167,139,250,0.1), rgba(37,99,235,0.15));
+  filter: blur(16px);
+  z-index: -2;
+  opacity: 0.6;
+  animation: popularGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes popularGlow {
+  0% { opacity: 0.4; transform: scale(0.98); }
+  100% { opacity: 0.8; transform: scale(1.02); }
+}
+
+/* ─── 10. Skip-to-content a11y link ──────────────── */
+.skip-to-content {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 0 0 8px 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: var(--font-display);
+  transition: top 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.skip-to-content:focus {
+  top: 0;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }

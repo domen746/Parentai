@@ -256,8 +256,9 @@ document.getElementById('waitlist-form')?.addEventListener('submit', handleWaitl
 // ─── Navbar scroll ────────────────────────────────
 window.addEventListener('scroll', () => {
   const navbar = document.getElementById('navbar');
-  navbar?.classList.toggle('scrolled', window.scrollY > 40);
-});
+  const scrolled = window.scrollY > 40;
+  navbar?.classList.toggle('scrolled', scrolled);
+}, { passive: true });
 
 // ─── Hamburger ────────────────────────────────────
 const hamburger = document.getElementById('hamburger');
@@ -1615,4 +1616,55 @@ if (cookieBanner && !localStorage.getItem('parentai_cookies')) {
 })();
 
 // ─── 40. Animated Mesh Gradient Hero ─────────────
+
+// ═══════════════════════════════════════════════════
+// 10 IMPROVEMENTS
+// ═══════════════════════════════════════════════════
+
+// ─── Improvement 3: Testimonial swipe dots (mobile) ──
+(function() {
+  const grid = document.querySelector('.testimonials-grid');
+  const dotsContainer = document.getElementById('testiDots');
+  if (!grid || !dotsContainer) return;
+
+  const cards = grid.querySelectorAll('.testi-card');
+  if (cards.length < 2) return;
+
+  // Create dots
+  cards.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to review ' + (i + 1));
+    dot.addEventListener('click', () => {
+      cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  // Update active dot on scroll
+  const dots = dotsContainer.querySelectorAll('.dot');
+  let ticking = false;
+
+  grid.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const scrollLeft = grid.scrollLeft;
+      const gridWidth = grid.offsetWidth;
+      let closestIdx = 0;
+      let closestDist = Infinity;
+
+      cards.forEach((card, i) => {
+        const center = card.offsetLeft + card.offsetWidth / 2 - scrollLeft;
+        const dist = Math.abs(center - gridWidth / 2);
+        if (dist < closestDist) { closestDist = dist; closestIdx = i; }
+      });
+
+      dots.forEach((d, i) => d.classList.toggle('active', i === closestIdx));
+      ticking = false;
+    });
+  }, { passive: true });
+})();
+
+// ─── Improvement 8: Feature icon hover uses CSS only ──
 // (Pure CSS — mesh blobs animate via CSS keyframes, no JS needed)
