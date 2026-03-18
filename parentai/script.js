@@ -215,7 +215,8 @@ function handleWaitlistSubmit(e) {
   btn.textContent = '✓ You\'re on the list!';
   btn.style.background = '#bfdbfe';
   btn.style.color = '#1e40af';
-
+  // Confetti burst
+  launchConfetti(btn);
   if (feedback) {
     feedback.textContent = 'We\'ll email you the moment we launch. Welcome to ParentAI!';
     feedback.className = 'email-feedback success';
@@ -538,5 +539,150 @@ if (testiGrid && testiDots) {
   window.addEventListener('resize', () => {
     stopAutoScroll();
     if (window.innerWidth <= 900) startAutoScroll();
+  });
+}
+
+// ─── Page Loader ──────────────────────────────────
+const pageLoader = document.getElementById('pageLoader');
+const loaderBar = document.getElementById('loaderBar');
+if (pageLoader && loaderBar) {
+  let progress = 0;
+  const loaderInterval = setInterval(() => {
+    progress += Math.random() * 25 + 5;
+    if (progress > 90) progress = 90;
+    loaderBar.style.width = progress + '%';
+  }, 150);
+
+  window.addEventListener('load', () => {
+    clearInterval(loaderInterval);
+    loaderBar.style.width = '100%';
+    pageLoader.classList.add('done');
+    setTimeout(() => {
+      pageLoader.classList.add('hidden');
+      setTimeout(() => pageLoader.remove(), 400);
+    }, 300);
+  });
+}
+
+// ─── Scroll Progress Bar ──────────────────────────
+const scrollProgress = document.getElementById('scrollProgress');
+if (scrollProgress) {
+  window.addEventListener('scroll', () => {
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+    scrollProgress.style.width = pct + '%';
+  }, { passive: true });
+}
+
+// ─── Confetti on signup ───────────────────────────
+function launchConfetti(originEl) {
+  const rect = originEl.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const colors = ['#2563eb', '#60a5fa', '#a78bfa', '#fbbf24', '#6ee7b7', '#f87171'];
+  const count = 40;
+
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement('div');
+    particle.style.cssText = `
+      position:fixed; left:${cx}px; top:${cy}px;
+      width:${4 + Math.random() * 4}px; height:${4 + Math.random() * 4}px;
+      background:${colors[Math.floor(Math.random() * colors.length)]};
+      border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
+      pointer-events:none; z-index:9999;
+    `;
+    document.body.appendChild(particle);
+
+    const angle = Math.random() * Math.PI * 2;
+    const velocity = 60 + Math.random() * 120;
+    const dx = Math.cos(angle) * velocity;
+    const dy = Math.sin(angle) * velocity - 60;
+
+    particle.animate([
+      { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+      { transform: `translate(${dx}px, ${dy + 200}px) scale(0)`, opacity: 0 }
+    ], { duration: 800 + Math.random() * 400, easing: 'cubic-bezier(.2,.8,.3,1)' })
+      .onfinish = () => particle.remove();
+  }
+}
+
+// ─── Pricing toggle (monthly/yearly) ─────────────
+const pricingToggle = document.getElementById('pricingToggle');
+const pToggleMonthly = document.getElementById('pToggleMonthly');
+const pToggleYearly = document.getElementById('pToggleYearly');
+
+if (pricingToggle) {
+  pToggleMonthly?.classList.add('active');
+
+  pricingToggle.addEventListener('change', () => {
+    const isYearly = pricingToggle.checked;
+    pToggleMonthly?.classList.toggle('active', !isYearly);
+    pToggleYearly?.classList.toggle('active', isYearly);
+
+    document.querySelectorAll('.pricing-price[data-monthly]').forEach(el => {
+      const price = isYearly ? el.dataset.yearly : el.dataset.monthly;
+      const suffix = isYearly ? '/mo' : '/mo';
+      el.style.opacity = '0';
+      setTimeout(() => {
+        el.innerHTML = `$${price}<span>${suffix}</span>`;
+        el.style.opacity = '1';
+      }, 150);
+    });
+  });
+}
+
+// ─── Phone screen live animations on scroll ───────
+const phoneSection = document.querySelector('.hero-visual');
+if (phoneSection) {
+  let phoneAnimated = false;
+  const phoneObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !phoneAnimated) {
+      phoneAnimated = true;
+      const tasks = document.querySelectorAll('.phone-mockup .task-pending');
+      tasks.forEach((task, i) => {
+        setTimeout(() => {
+          const check = task.querySelector('.task-check');
+          if (check) check.textContent = '✓';
+          task.classList.remove('task-pending');
+          task.classList.add('task-done');
+        }, 3000 + i * 1200);
+      });
+
+      // Animate score from 18% to 96%
+      const scoreVal = document.querySelector('.phone-mockup .score-value');
+      const scoreBar = document.querySelector('.phone-mockup .score-bar');
+      if (scoreVal && scoreBar) {
+        setTimeout(() => {
+          let current = 18;
+          const target = 96;
+          scoreBar.classList.remove('score-bar-low');
+          const interval = setInterval(() => {
+            current += 2;
+            if (current >= target) {
+              current = target;
+              clearInterval(interval);
+            }
+            scoreVal.textContent = current + '%';
+          }, 40);
+        }, 6600);
+      }
+    }
+  }, { threshold: 0.3 });
+  phoneObserver.observe(phoneSection);
+}
+
+// ─── Cookie Consent ───────────────────────────────
+const cookieBanner = document.getElementById('cookieBanner');
+if (cookieBanner && !localStorage.getItem('parentai_cookies')) {
+  setTimeout(() => cookieBanner.classList.add('visible'), 2000);
+
+  document.getElementById('cookieAccept')?.addEventListener('click', () => {
+    localStorage.setItem('parentai_cookies', 'accepted');
+    cookieBanner.classList.remove('visible');
+  });
+
+  document.getElementById('cookieDecline')?.addEventListener('click', () => {
+    localStorage.setItem('parentai_cookies', 'declined');
+    cookieBanner.classList.remove('visible');
   });
 }

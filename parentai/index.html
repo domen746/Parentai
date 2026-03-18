@@ -37,6 +37,14 @@
 </head>
 <body>
 
+  <!-- PAGE LOADER -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-bar" id="loaderBar"></div>
+  </div>
+
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
   <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
     <a href="#" class="nav-logo">
@@ -65,7 +73,7 @@
       <div class="grid-overlay"></div>
     </div>
 
-    <div class="hero-content">
+    <div class="hero-content hero-stagger">
       <div class="hero-badge">
         <span class="badge-dot"></span>
         Now in beta — <span id="heroCounter">2,419</span> parents joined
@@ -199,6 +207,25 @@
       Last signup <span class="ticker-time" id="lastSignup">just now</span>
       <span class="ticker-sep">·</span>
       <span class="ticker-accent">Spots filling fast</span>
+    </div>
+  </div>
+
+  <!-- MARQUEE LOGOS -->
+  <div class="marquee-strip">
+    <div class="marquee-label">Featured in</div>
+    <div class="marquee-track">
+      <div class="marquee-inner">
+        <span class="marquee-logo">TechCrunch</span>
+        <span class="marquee-logo">Product Hunt</span>
+        <span class="marquee-logo">The Verge</span>
+        <span class="marquee-logo">Wired</span>
+        <span class="marquee-logo">Forbes</span>
+        <span class="marquee-logo">TechCrunch</span>
+        <span class="marquee-logo">Product Hunt</span>
+        <span class="marquee-logo">The Verge</span>
+        <span class="marquee-logo">Wired</span>
+        <span class="marquee-logo">Forbes</span>
+      </div>
     </div>
   </div>
 
@@ -525,10 +552,20 @@
     <h2 class="section-title">Simple, honest pricing</h2>
     <p class="section-sub">Lock in early-access rates before we launch. Upgrade or cancel anytime.</p>
 
+    <div class="pricing-toggle">
+      <span class="pricing-toggle-label" id="pToggleMonthly">Monthly</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="pricingToggle" />
+        <span class="toggle-slider"></span>
+      </label>
+      <span class="pricing-toggle-label" id="pToggleYearly">Yearly</span>
+      <span class="pricing-save-badge">Save 25%</span>
+    </div>
+
     <div class="pricing-grid">
       <div class="pricing-card">
         <div class="pricing-tier">Free</div>
-        <div class="pricing-price">$0<span>/mo</span></div>
+        <div class="pricing-price" data-monthly="0" data-yearly="0">$0<span>/mo</span></div>
         <div class="pricing-desc">Perfect for trying it out</div>
         <ul class="pricing-features">
           <li><span class="pf-check">✓</span>1 child profile</li>
@@ -542,7 +579,7 @@
       <div class="pricing-card pricing-popular">
         <div class="pricing-popular-badge">Most popular</div>
         <div class="pricing-tier">Family</div>
-        <div class="pricing-price">$7<span>/mo</span></div>
+        <div class="pricing-price" data-monthly="7" data-yearly="5">$7<span>/mo</span></div>
         <div class="pricing-desc">For the whole household</div>
         <ul class="pricing-features">
           <li><span class="pf-check">✓</span>Up to 4 child profiles</li>
@@ -557,7 +594,7 @@
 
       <div class="pricing-card">
         <div class="pricing-tier">Pro</div>
-        <div class="pricing-price">$14<span>/mo</span></div>
+        <div class="pricing-price" data-monthly="14" data-yearly="10">$14<span>/mo</span></div>
         <div class="pricing-desc">For power users & educators</div>
         <ul class="pricing-features">
           <li><span class="pf-check">✓</span>Unlimited child profiles</li>
@@ -709,6 +746,15 @@
       </div>
     </div>
   </footer>
+
+  <!-- COOKIE CONSENT -->
+  <div class="cookie-banner" id="cookieBanner">
+    <p>We use cookies for analytics to improve your experience. <a href="privacy.html#cookies">Learn more</a></p>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-accept" id="cookieAccept">Accept</button>
+      <button class="cookie-btn cookie-decline" id="cookieDecline">Decline</button>
+    </div>
+  </div>
 
   <!-- BACK TO TOP -->
   <button class="back-to-top" id="backToTop" aria-label="Back to top">
