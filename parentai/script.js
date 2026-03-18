@@ -1372,3 +1372,279 @@ if (cookieBanner && !localStorage.getItem('parentai_cookies')) {
   const ticker = document.getElementById('loveTicker');
   if (ticker) loveObserver.observe(ticker);
 })();
+
+// ═══════════════════════════════════════════════════
+//  BATCH 6 — 10 More Features
+// ═══════════════════════════════════════════════════
+
+// ─── 31. Text Scramble / Decode Effect on Titles ──
+(function() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%';
+  const titles = document.querySelectorAll('.section-title');
+  if (!titles.length) return;
+
+  titles.forEach(title => {
+    const originalHTML = title.innerHTML;
+    const textContent = title.textContent;
+    let scrambled = false;
+
+    const scrambleObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !scrambled) {
+        scrambled = true;
+        scrambleObserver.disconnect();
+
+        // Extract text nodes only for scramble
+        const textNodes = [];
+        const walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT);
+        let node;
+        while (node = walker.nextNode()) {
+          if (node.textContent.trim()) textNodes.push(node);
+        }
+
+        const iterations = 6;
+        let round = 0;
+
+        function doScramble() {
+          if (round >= iterations) return;
+          round++;
+
+          textNodes.forEach(tn => {
+            const original = tn._original || (tn._original = tn.textContent);
+            const arr = original.split('');
+            const scrambleCount = Math.max(1, Math.floor(arr.length * (1 - round / iterations)));
+
+            for (let i = 0; i < scrambleCount; i++) {
+              const idx = Math.floor(Math.random() * arr.length);
+              if (arr[idx] !== ' ' && arr[idx] !== '\n') {
+                arr[idx] = chars[Math.floor(Math.random() * chars.length)];
+              }
+            }
+            tn.textContent = arr.join('');
+          });
+
+          if (round < iterations) {
+            setTimeout(doScramble, 50);
+          } else {
+            // Restore original
+            textNodes.forEach(tn => {
+              tn.textContent = tn._original;
+            });
+          }
+        }
+
+        doScramble();
+      }
+    }, { threshold: 0.3 });
+
+    scrambleObserver.observe(title);
+  });
+})();
+
+// ─── 32. Pricing Card Spotlight Glow ─────────────
+(function() {
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  const cards = document.querySelectorAll('.pricing-card');
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--spot-x', x + 'px');
+      card.style.setProperty('--spot-y', y + 'px');
+      // Move the pseudo-element via inline style on a data attr
+      card.style.cssText += `--spot-x:${x}px;--spot-y:${y}px;`;
+    });
+  });
+
+  // Inject a tiny style to position the ::before from custom properties
+  const style = document.createElement('style');
+  style.textContent = '.pricing-card::before{left:var(--spot-x,50%);top:var(--spot-y,50%);}';
+  document.head.appendChild(style);
+})();
+
+// ─── 33. Scroll-Filled Timeline (How It Works) ───
+(function() {
+  const fill = document.getElementById('timelineFill');
+  const stepsGrid = document.querySelector('.steps-grid');
+  if (!fill || !stepsGrid) return;
+
+  function updateTimeline() {
+    const rect = stepsGrid.getBoundingClientRect();
+    const viewH = window.innerHeight;
+
+    // How far through the steps-grid the viewport center is
+    const center = viewH / 2;
+    const progress = (center - rect.top) / rect.height;
+    const clamped = Math.max(0, Math.min(1, progress));
+
+    fill.style.height = (clamped * 100) + '%';
+  }
+
+  window.addEventListener('scroll', updateTimeline, { passive: true });
+  updateTimeline();
+})();
+
+// ─── 34. Animated Avatar Rings on Testimonials ───
+// (Pure CSS — the animation is handled by the CSS added in style.css)
+
+// ─── 35. Section Exploration Tracker ─────────────
+(function() {
+  const tracker = document.getElementById('exploreTracker');
+  const countEl = document.getElementById('etCount');
+  const ringFill = document.getElementById('etRingFill');
+  if (!tracker || !countEl || !ringFill) return;
+
+  const sectionIds = ['hero', 'features', 'how', 'compare', 'testimonials', 'pricing', 'faq'];
+  const total = sectionIds.length;
+  const explored = new Set();
+  const circumference = 2 * Math.PI * 15.5; // r=15.5
+
+  function updateTracker() {
+    const count = explored.size;
+    countEl.textContent = count + '/' + total;
+    const offset = circumference * (1 - count / total);
+    ringFill.style.strokeDashoffset = offset;
+
+    tracker.classList.toggle('visible', window.scrollY > 200);
+  }
+
+  const expObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        explored.add(entry.target.id);
+        updateTracker();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) expObserver.observe(el);
+  });
+
+  window.addEventListener('scroll', () => {
+    tracker.classList.toggle('visible', window.scrollY > 200);
+  }, { passive: true });
+})();
+
+// ─── 36. Exit-Intent Popup ───────────────────────
+(function() {
+  const overlay = document.getElementById('exitIntentOverlay');
+  if (!overlay) return;
+  const closeBtn = document.getElementById('eimClose');
+  const skipBtn = document.getElementById('eimSkip');
+  const ctaBtn = document.getElementById('eimCta');
+
+  let shown = false;
+
+  function showPopup() {
+    if (shown || localStorage.getItem('parentai_exit_dismissed')) return;
+    // Don't show if user already signed up
+    const wl = JSON.parse(localStorage.getItem('parentai_waitlist') || '[]');
+    if (wl.length > 0) return;
+
+    shown = true;
+    overlay.classList.add('visible');
+  }
+
+  function hidePopup() {
+    overlay.classList.remove('visible');
+    localStorage.setItem('parentai_exit_dismissed', 'true');
+  }
+
+  // Desktop: mouse leaves viewport top
+  document.addEventListener('mouseout', (e) => {
+    if (e.clientY <= 0 && !e.relatedTarget) {
+      showPopup();
+    }
+  });
+
+  closeBtn?.addEventListener('click', hidePopup);
+  skipBtn?.addEventListener('click', hidePopup);
+  ctaBtn?.addEventListener('click', () => {
+    hidePopup();
+    document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Close on overlay click (not modal)
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) hidePopup();
+  });
+})();
+
+// ─── 37. Feature Card Peek / Expand ──────────────
+(function() {
+  const cards = document.querySelectorAll('.feature-card');
+
+  cards.forEach(card => {
+    const bonus = card.querySelector('.feat-bonus');
+    if (!bonus) return;
+
+    // Add hint text
+    const hint = document.createElement('div');
+    hint.className = 'feat-expand-hint';
+    hint.textContent = 'Click to learn more';
+    card.appendChild(hint);
+
+    card.addEventListener('click', (e) => {
+      // Don't expand if clicking a link
+      if (e.target.closest('a')) return;
+      card.classList.toggle('expanded');
+    });
+  });
+})();
+
+// ─── 38. Reading Time Badge ──────────────────────
+(function() {
+  const badge = document.getElementById('readingTimeBadge');
+  if (!badge) return;
+
+  // Calculate reading time from page text (~200 wpm)
+  const text = document.body.innerText;
+  const words = text.split(/\s+/).length;
+  const totalMinutes = Math.ceil(words / 200);
+  badge.textContent = '~' + totalMinutes + ' min read';
+
+  function updateBadge() {
+    const scrollY = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? scrollY / docHeight : 0;
+
+    badge.classList.toggle('visible', scrollY > 100 && pct < 0.95);
+
+    if (pct >= 0.95) {
+      badge.textContent = '✓ Finished';
+      badge.classList.add('done');
+      badge.classList.add('visible');
+    } else {
+      const remaining = Math.max(1, Math.ceil(totalMinutes * (1 - pct)));
+      badge.textContent = '~' + remaining + ' min left';
+      badge.classList.remove('done');
+    }
+  }
+
+  window.addEventListener('scroll', updateBadge, { passive: true });
+})();
+
+// ─── 39. Scroll-Zoom Section Entrance ────────────
+(function() {
+  const sections = document.querySelectorAll(
+    '.features, .how-it-works, .ba-section, .testimonials-section, .compare-table-section, .pricing-section, .faq-section'
+  );
+
+  sections.forEach(s => s.classList.add('section-zoom'));
+
+  const zoomObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('zoomed-in');
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -60px 0px' });
+
+  sections.forEach(s => zoomObserver.observe(s));
+})();
+
+// ─── 40. Animated Mesh Gradient Hero ─────────────
+// (Pure CSS — mesh blobs animate via CSS keyframes, no JS needed)
