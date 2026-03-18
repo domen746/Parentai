@@ -1595,38 +1595,6 @@ if (cookieBanner && !localStorage.getItem('parentai_cookies')) {
   });
 })();
 
-// ─── 38. Reading Time Badge ──────────────────────
-(function() {
-  const badge = document.getElementById('readingTimeBadge');
-  if (!badge) return;
-
-  // Calculate reading time from page text (~200 wpm)
-  const text = document.body.innerText;
-  const words = text.split(/\s+/).length;
-  const totalMinutes = Math.ceil(words / 200);
-  badge.textContent = '~' + totalMinutes + ' min read';
-
-  function updateBadge() {
-    const scrollY = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = docHeight > 0 ? scrollY / docHeight : 0;
-
-    badge.classList.toggle('visible', scrollY > 100 && pct < 0.95);
-
-    if (pct >= 0.95) {
-      badge.textContent = '✓ Finished';
-      badge.classList.add('done');
-      badge.classList.add('visible');
-    } else {
-      const remaining = Math.max(1, Math.ceil(totalMinutes * (1 - pct)));
-      badge.textContent = '~' + remaining + ' min left';
-      badge.classList.remove('done');
-    }
-  }
-
-  window.addEventListener('scroll', updateBadge, { passive: true });
-})();
-
 // ─── 39. Scroll-Zoom Section Entrance ────────────
 (function() {
   const sections = document.querySelectorAll(

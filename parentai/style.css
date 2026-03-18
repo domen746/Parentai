@@ -4021,40 +4021,6 @@ body.dark-mode .ct-header-new {
   display: none;
 }
 
-/* ─── 38. Reading Time Badge ─────────────────────── */
-.reading-time-badge {
-  position: fixed;
-  top: 72px;
-  right: 20px;
-  z-index: 90;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 5px 14px;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-}
-
-.reading-time-badge.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reading-time-badge.done {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
-
-@media (max-width: 900px) {
-  .reading-time-badge { display: none; }
-}
-
 /* ─── 39. Scroll-Zoom Section Entrance ───────────── */
 .section-zoom {
   transform: scale(0.97);
@@ -4130,10 +4096,6 @@ body.dark-mode .ct-header-new {
 body.dark-mode .mesh-blob { opacity: 0.15; }
 
 body.dark-mode .exit-intent-modal {
-  background: var(--bg2);
-}
-
-body.dark-mode .reading-time-badge {
   background: var(--bg2);
 }
 
