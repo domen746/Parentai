@@ -75,6 +75,7 @@
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#waitlist" class="nav-cta">Get Early Access</a></li>
     </ul>
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -528,6 +529,11 @@
             <div class="testi-role">Mom of 2, Berlin</div>
           </div>
         </div>
+        <div class="testi-reactions">
+          <button class="reaction-btn" data-emoji="👏"><span class="reaction-emoji">👏</span><span class="reaction-count">12</span></button>
+          <button class="reaction-btn" data-emoji="❤️"><span class="reaction-emoji">❤️</span><span class="reaction-count">8</span></button>
+          <button class="reaction-btn" data-emoji="🔥"><span class="reaction-emoji">🔥</span><span class="reaction-count">5</span></button>
+        </div>
       </div>
 
       <div class="testi-card">
@@ -539,6 +545,11 @@
             <div class="testi-name">James K.</div>
             <div class="testi-role">Dad of 3, London</div>
           </div>
+        </div>
+        <div class="testi-reactions">
+          <button class="reaction-btn" data-emoji="👏"><span class="reaction-emoji">👏</span><span class="reaction-count">9</span></button>
+          <button class="reaction-btn" data-emoji="❤️"><span class="reaction-emoji">❤️</span><span class="reaction-count">14</span></button>
+          <button class="reaction-btn" data-emoji="🔥"><span class="reaction-emoji">🔥</span><span class="reaction-count">3</span></button>
         </div>
       </div>
 
@@ -552,6 +563,11 @@
             <div class="testi-role">Mom of 2, Amsterdam</div>
           </div>
         </div>
+        <div class="testi-reactions">
+          <button class="reaction-btn" data-emoji="👏"><span class="reaction-emoji">👏</span><span class="reaction-count">7</span></button>
+          <button class="reaction-btn" data-emoji="❤️"><span class="reaction-emoji">❤️</span><span class="reaction-count">6</span></button>
+          <button class="reaction-btn" data-emoji="🔥"><span class="reaction-emoji">🔥</span><span class="reaction-count">11</span></button>
+        </div>
       </div>
 
       <div class="testi-card">
@@ -564,9 +580,51 @@
             <div class="testi-role">Teacher & mom, Madrid</div>
           </div>
         </div>
+        <div class="testi-reactions">
+          <button class="reaction-btn" data-emoji="👏"><span class="reaction-emoji">👏</span><span class="reaction-count">15</span></button>
+          <button class="reaction-btn" data-emoji="❤️"><span class="reaction-emoji">❤️</span><span class="reaction-count">10</span></button>
+          <button class="reaction-btn" data-emoji="🔥"><span class="reaction-emoji">🔥</span><span class="reaction-count">4</span></button>
+        </div>
       </div>
     </div>
     <div class="testi-scroll-dots" id="testiDots"></div>
+  </section>
+
+  <!-- PARENTAI vs THE OLD WAY -->
+  <section class="compare-table-section" id="versus">
+    <div class="section-label">Why switch</div>
+    <h2 class="section-title">ParentAI vs The Old Way</h2>
+    <p class="section-sub">Side by side — see why <span class="highlight-mark">2,400+ parents</span> already switched.</p>
+
+    <div class="compare-table">
+      <div class="ct-header ct-header-old">The Old Way 😩</div>
+      <div class="ct-header ct-header-new">ParentAI ✨</div>
+
+      <div class="ct-row">
+        <div class="ct-cell ct-old"><span class="ct-x">✗</span> "Is your room clean?" debate</div>
+        <div class="ct-cell ct-new"><span class="ct-check">✓</span> Objective AI score — no debate</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell ct-old"><span class="ct-x">✗</span> You inspect every corner</div>
+        <div class="ct-cell ct-new"><span class="ct-check">✓</span> AI verifies in under 3 seconds</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell ct-old"><span class="ct-x">✗</span> Same tasks for all ages</div>
+        <div class="ct-cell ct-new"><span class="ct-check">✓</span> Age-appropriate smart checklists</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell ct-old"><span class="ct-x">✗</span> "I already cleaned!" arguments</div>
+        <div class="ct-cell ct-new"><span class="ct-check">✓</span> Before/after visual proof</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell ct-old"><span class="ct-x">✗</span> No motivation system</div>
+        <div class="ct-cell ct-new"><span class="ct-check">✓</span> Points, streaks & rewards</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell ct-old"><span class="ct-x">✗</span> Stuff hidden under the bed</div>
+        <div class="ct-cell ct-new"><span class="ct-check">✓</span> Object-level detection catches it</div>
+      </div>
+    </div>
   </section>
 
   <!-- PRICING -->
@@ -707,6 +765,21 @@
         <span class="wl-live-text"><strong id="wlCounter">2,419</strong> parents already joined</span>
       </div>
       <div class="wl-badge">Early Access Open · Q3 2026</div>
+
+      <!-- Launch Countdown -->
+      <div class="launch-countdown" id="launchCountdown">
+        <div class="cd-label">Launching in</div>
+        <div class="cd-units">
+          <div class="cd-unit"><span class="cd-num" id="cdDays">000</span><span class="cd-txt">days</span></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><span class="cd-num" id="cdHours">00</span><span class="cd-txt">hours</span></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><span class="cd-num" id="cdMins">00</span><span class="cd-txt">mins</span></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><span class="cd-num" id="cdSecs">00</span><span class="cd-txt">secs</span></div>
+        </div>
+      </div>
+
       <h2>Be first to raise<br />a tidier kid.</h2>
       <p>Join the waitlist and get 3 months free when we launch. No credit card needed.</p>
 
@@ -721,9 +794,41 @@
         <div class="email-feedback" id="wlFeedback"></div>
       </div>
 
+      <!-- Waitlist Position Reveal -->
+      <div class="wl-position-reveal" id="wlPositionReveal">
+        <div class="wl-pos-inner">
+          <div class="wl-pos-confetti" id="wlPosConfetti"></div>
+          <div class="wl-pos-number">🎉 You're <strong>#<span id="wlPosNum">2,420</span></strong> on the list!</div>
+          <div class="wl-pos-sub">You're ahead of <strong>87%</strong> of visitors who haven't signed up yet</div>
+        </div>
+      </div>
+
       <p class="form-note">Free forever for early members · No spam · Unsubscribe anytime</p>
     </div>
   </section>
+
+  <!-- WHY PARENTS LOVE IT TICKER -->
+  <div class="love-ticker" id="loveTicker">
+    <div class="love-ticker-track">
+      <div class="love-ticker-inner">
+        <span class="love-stat"><span class="love-num" data-target="87">0</span>% less arguments</span>
+        <span class="love-sep">·</span>
+        <span class="love-stat"><span class="love-num" data-target="3">0</span>x faster cleanup</span>
+        <span class="love-sep">·</span>
+        <span class="love-stat"><span class="love-num" data-target="94">0</span>% detection accuracy</span>
+        <span class="love-sep">·</span>
+        <span class="love-stat"><span class="love-num" data-target="12">0</span>min saved daily</span>
+        <span class="love-sep">·</span>
+        <span class="love-stat"><span class="love-num" data-target="87">0</span>% less arguments</span>
+        <span class="love-sep">·</span>
+        <span class="love-stat"><span class="love-num" data-target="3">0</span>x faster cleanup</span>
+        <span class="love-sep">·</span>
+        <span class="love-stat"><span class="love-num" data-target="94">0</span>% detection accuracy</span>
+        <span class="love-sep">·</span>
+        <span class="love-stat"><span class="love-num" data-target="12">0</span>min saved daily</span>
+      </div>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -761,6 +866,9 @@
       </div>
       <div class="footer-bottom">
         <p class="footer-copy">© 2026 ParentAI. All rights reserved.</p>
+        <div class="footer-shortcuts">
+          <span class="shortcut-hint">⌨️ Press <kbd>1</kbd>–<kbd>6</kbd> to jump sections</span>
+        </div>
         <div class="footer-socials">
           <a href="#" class="social-link">Twitter</a>
           <a href="#" class="social-link">Instagram</a>
@@ -790,6 +898,27 @@
     <div class="cookie-actions">
       <button class="cookie-btn cookie-accept" id="cookieAccept">Accept</button>
       <button class="cookie-btn cookie-decline" id="cookieDecline">Decline</button>
+    </div>
+  </div>
+
+  <!-- SCROLL NAV DOTS -->
+  <div class="scroll-nav-dots" id="scrollNavDots">
+    <button class="snd" data-target="hero" aria-label="Hero"><span class="snd-label">Home</span></button>
+    <button class="snd" data-target="features" aria-label="Features"><span class="snd-label">Features</span></button>
+    <button class="snd" data-target="how" aria-label="How it works"><span class="snd-label">How</span></button>
+    <button class="snd" data-target="compare" aria-label="Compare"><span class="snd-label">Compare</span></button>
+    <button class="snd" data-target="testimonials" aria-label="Reviews"><span class="snd-label">Reviews</span></button>
+    <button class="snd" data-target="pricing" aria-label="Pricing"><span class="snd-label">Pricing</span></button>
+  </div>
+
+  <!-- SHARE WIDGET -->
+  <div class="share-widget" id="shareWidget">
+    <button class="share-fab" id="shareFab" aria-label="Share">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="1.5"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="currentColor" stroke-width="1.5"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+    <div class="share-dropdown" id="shareDropdown">
+      <button class="share-opt" id="shareCopy">📋 Copy link</button>
+      <button class="share-opt" id="shareNative">📤 Share…</button>
     </div>
   </div>
 

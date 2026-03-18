@@ -1044,3 +1044,331 @@ if (cookieBanner && !localStorage.getItem('parentai_cookies')) {
 
   faqObserver.observe(badge);
 })();
+
+// ═══════════════════════════════════════════════════
+//  BATCH 5 — Innovative Features
+// ═══════════════════════════════════════════════════
+
+// ─── 21. Full-Site Dark Mode Toggle ──────────────
+(function() {
+  const toggle = document.getElementById('darkModeToggle');
+  if (!toggle) return;
+
+  // Restore saved preference
+  if (localStorage.getItem('parentai_darkmode') === 'true') {
+    document.body.classList.add('dark-mode');
+    toggle.textContent = '☀️';
+  }
+
+  toggle.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark-mode');
+    toggle.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('parentai_darkmode', isDark);
+  });
+})();
+
+// ─── 22. Before/After Auto-Animate on Scroll ─────
+(function() {
+  const wrapper = document.getElementById('baWrapper');
+  if (!wrapper) return;
+
+  const baObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      wrapper.classList.add('auto-animate');
+      baObserver.disconnect();
+
+      // Remove auto-animate after animation completes to allow manual drag
+      setTimeout(() => {
+        wrapper.classList.remove('auto-animate');
+      }, 2600);
+    }
+  }, { threshold: 0.4 });
+
+  baObserver.observe(wrapper);
+})();
+
+// ─── 23. Launch Countdown Timer ──────────────────
+(function() {
+  const launchDate = new Date('2026-07-01T00:00:00').getTime();
+  const daysEl = document.getElementById('cdDays');
+  const hoursEl = document.getElementById('cdHours');
+  const minsEl = document.getElementById('cdMins');
+  const secsEl = document.getElementById('cdSecs');
+  if (!daysEl) return;
+
+  function pad(n, len) {
+    return String(n).padStart(len || 2, '0');
+  }
+
+  function updateCountdown() {
+    const now = Date.now();
+    const diff = Math.max(0, launchDate - now);
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+    const newDays = pad(days, 3);
+    const newHours = pad(hours);
+    const newMins = pad(mins);
+    const newSecs = pad(secs);
+
+    if (secsEl.textContent !== newSecs) {
+      secsEl.classList.add('tick');
+      setTimeout(() => secsEl.classList.remove('tick'), 300);
+    }
+
+    daysEl.textContent = newDays;
+    hoursEl.textContent = newHours;
+    minsEl.textContent = newMins;
+    secsEl.textContent = newSecs;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+})();
+
+// ─── 24. Emoji Reactions on Testimonials ─────────
+(function() {
+  const buttons = document.querySelectorAll('.reaction-btn');
+  if (!buttons.length) return;
+
+  // Load saved reactions
+  const saved = JSON.parse(localStorage.getItem('parentai_reactions') || '{}');
+
+  buttons.forEach(btn => {
+    const card = btn.closest('.testi-card');
+    const cardIdx = Array.from(document.querySelectorAll('.testi-card')).indexOf(card);
+    const emoji = btn.dataset.emoji;
+    const key = cardIdx + '_' + emoji;
+    const countEl = btn.querySelector('.reaction-count');
+
+    if (saved[key]) {
+      btn.classList.add('reacted');
+      const base = parseInt(countEl.textContent, 10);
+      countEl.textContent = base + 1;
+    }
+
+    btn.addEventListener('click', () => {
+      const isReacted = btn.classList.contains('reacted');
+      const current = parseInt(countEl.textContent, 10);
+
+      if (isReacted) {
+        btn.classList.remove('reacted');
+        countEl.textContent = current - 1;
+        delete saved[key];
+      } else {
+        btn.classList.add('reacted');
+        btn.classList.add('burst');
+        countEl.textContent = current + 1;
+        saved[key] = true;
+        setTimeout(() => btn.classList.remove('burst'), 400);
+      }
+
+      localStorage.setItem('parentai_reactions', JSON.stringify(saved));
+    });
+  });
+})();
+
+// ─── 25. Comparison Table Animated Checkmarks ────
+(function() {
+  const checks = document.querySelectorAll('.ct-check');
+  if (!checks.length) return;
+
+  const ctObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      checks.forEach((check, i) => {
+        setTimeout(() => check.classList.add('animated'), i * 150);
+      });
+      ctObserver.disconnect();
+    }
+  }, { threshold: 0.2 });
+
+  const table = document.querySelector('.compare-table');
+  if (table) ctObserver.observe(table);
+})();
+
+// ─── 26. Scroll-Position Nav Dots ────────────────
+(function() {
+  const dotsContainer = document.getElementById('scrollNavDots');
+  if (!dotsContainer) return;
+  const dots = dotsContainer.querySelectorAll('.snd');
+  const targetIds = Array.from(dots).map(d => d.dataset.target);
+
+  // Show/hide based on scroll
+  function updateDots() {
+    const scrollY = window.scrollY;
+    dotsContainer.classList.toggle('visible', scrollY > 300);
+
+    let activeId = targetIds[0];
+    targetIds.forEach(id => {
+      const section = document.getElementById(id);
+      if (section && scrollY >= section.offsetTop - 200) {
+        activeId = id;
+      }
+    });
+
+    dots.forEach(d => d.classList.toggle('active', d.dataset.target === activeId));
+  }
+
+  window.addEventListener('scroll', updateDots, { passive: true });
+  updateDots();
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const target = document.getElementById(dot.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+})();
+
+// ─── 27. Referral Share Widget ───────────────────
+(function() {
+  const fab = document.getElementById('shareFab');
+  const dropdown = document.getElementById('shareDropdown');
+  const copyBtn = document.getElementById('shareCopy');
+  const nativeBtn = document.getElementById('shareNative');
+  if (!fab || !dropdown) return;
+
+  fab.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('open');
+  });
+
+  document.addEventListener('click', () => dropdown.classList.remove('open'));
+
+  copyBtn?.addEventListener('click', () => {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+      copyBtn.textContent = '✓ Copied!';
+      copyBtn.classList.add('share-copied');
+      setTimeout(() => {
+        copyBtn.textContent = '📋 Copy link';
+        copyBtn.classList.remove('share-copied');
+      }, 2000);
+    });
+    dropdown.classList.remove('open');
+  });
+
+  nativeBtn?.addEventListener('click', () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'ParentAI — Clean Room, No Argument',
+        text: 'AI scans messy rooms, assigns tasks, and verifies they\'re done. Join the waitlist!',
+        url: window.location.href
+      });
+    } else {
+      // Fallback: open mailto
+      const subject = encodeURIComponent('Check out ParentAI');
+      const body = encodeURIComponent('AI-powered room cleaning for kids: ' + window.location.href);
+      window.open('mailto:?subject=' + subject + '&body=' + body);
+    }
+    dropdown.classList.remove('open');
+  });
+})();
+
+// ─── 28. Waitlist Position Reveal After Signup ───
+(function() {
+  const reveal = document.getElementById('wlPositionReveal');
+  const posNum = document.getElementById('wlPosNum');
+  if (!reveal || !posNum) return;
+
+  // Intercept the existing form submission to show position
+  const form = document.getElementById('waitlist-form');
+  if (!form) return;
+
+  form.addEventListener('submit', () => {
+    // Delay to let the main handler run first
+    setTimeout(() => {
+      posNum.textContent = formatCount(currentCount);
+      reveal.classList.add('visible');
+
+      // Mini confetti
+      const container = document.getElementById('wlPosConfetti');
+      if (container) {
+        const colors = ['#2563eb', '#60a5fa', '#fbbf24', '#6ee7b7', '#a78bfa'];
+        for (let i = 0; i < 20; i++) {
+          const p = document.createElement('div');
+          p.style.cssText = 'position:absolute;width:6px;height:6px;border-radius:50%;pointer-events:none;';
+          p.style.background = colors[Math.floor(Math.random() * colors.length)];
+          p.style.left = '50%';
+          p.style.top = '0';
+          container.appendChild(p);
+
+          const angle = Math.random() * Math.PI * 2;
+          const dist = 40 + Math.random() * 80;
+          const dx = Math.cos(angle) * dist;
+          const dy = Math.sin(angle) * dist;
+
+          p.animate([
+            { transform: 'translate(-50%, 0) scale(1)', opacity: 1 },
+            { transform: `translate(calc(-50% + ${dx}px), ${dy}px) scale(0)`, opacity: 0 }
+          ], { duration: 700 + Math.random() * 300, easing: 'cubic-bezier(.2,.8,.3,1)' })
+            .onfinish = () => p.remove();
+        }
+      }
+
+      // Hide after reset
+      setTimeout(() => reveal.classList.remove('visible'), 7000);
+    }, 200);
+  });
+})();
+
+// ─── 29. Keyboard Shortcuts ──────────────────────
+(function() {
+  const sectionMap = {
+    '1': 'hero',
+    '2': 'features',
+    '3': 'how',
+    '4': 'compare',
+    '5': 'testimonials',
+    '6': 'pricing'
+  };
+
+  document.addEventListener('keydown', (e) => {
+    // Don't trigger when typing in inputs
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+    const section = sectionMap[e.key];
+    if (section) {
+      const el = document.getElementById(section);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+})();
+
+// ─── 30. "Why Parents Love It" Flip Number Tickers ─
+(function() {
+  const nums = document.querySelectorAll('.love-num[data-target]');
+  if (!nums.length) return;
+
+  const loveObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      nums.forEach(numEl => {
+        const target = parseInt(numEl.dataset.target, 10);
+        if (isNaN(target)) return;
+
+        let current = 0;
+        const duration = 1200;
+        const start = performance.now();
+
+        function tick(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          current = Math.round(target * ease);
+          numEl.textContent = current;
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
+      });
+      loveObserver.disconnect();
+    }
+  }, { threshold: 0.3 });
+
+  const ticker = document.getElementById('loveTicker');
+  if (ticker) loveObserver.observe(ticker);
+})();

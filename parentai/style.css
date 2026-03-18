@@ -3083,4 +3083,618 @@ body {
   opacity: 1;
   transform: scale(1);
 }
+
+/* ═══════════════════════════════════════════════════
+   BATCH 5 — Innovative Features
+   ═══════════════════════════════════════════════════ */
+
+/* ─── 21. Full-Site Dark Mode ────────────────────── */
+.dark-mode-toggle {
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease;
+  line-height: 1;
+  margin-left: 8px;
+}
+
+.dark-mode-toggle:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+
+body.dark-mode {
+  --bg: #0f172a;
+  --bg2: #1e293b;
+  --bg3: #1a2332;
+  --border: rgba(148,163,184,0.15);
+  --border-hover: rgba(148,163,184,0.3);
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --accent-dim: rgba(37,99,235,0.15);
+  --accent-glow: rgba(37,99,235,0.25);
+}
+
+body.dark-mode .navbar {
+  background: rgba(15,23,42,0.92);
+}
+
+body.dark-mode .navbar.scrolled {
+  background: rgba(15,23,42,0.97);
+}
+
+body.dark-mode .wave-divider path { fill: var(--bg2); }
+
+body.dark-mode .phone-mockup { background: #1a1a2e; }
+
+body.dark-mode .pricing-card {
+  background: var(--bg2);
+  border-color: var(--border);
+}
+
+body.dark-mode .pricing-popular {
+  border-color: var(--accent);
+}
+
+body.dark-mode .waitlist-card {
+  background: var(--bg2);
+}
+
+body.dark-mode .faq-q {
+  color: var(--text);
+}
+
+body.dark-mode .footer {
+  background: var(--bg3);
+}
+
+body.dark-mode .noise-overlay { opacity: 0.015; }
+
+body.dark-mode .sticky-pricing-bar {
+  background: rgba(15,23,42,0.95);
+}
+
+body.dark-mode .scroll-depth-cta {
+  background: var(--bg2);
+}
+
+body.dark-mode .cookie-banner {
+  background: var(--bg2);
+}
+
+body.dark-mode .ticker-bar {
+  background: var(--bg2);
+}
+
+body.dark-mode .marquee-strip {
+  background: var(--bg3);
+}
+
+body.dark-mode .feature-card {
+  background: var(--bg2);
+}
+
+body.dark-mode .testi-card {
+  background: var(--bg2);
+}
+
+body.dark-mode .step-content {
+  background: var(--bg2);
+}
+
+body.dark-mode .ba-scores {
+  background: var(--bg2);
+}
+
+body.dark-mode .ct-cell {
+  background: var(--bg2);
+}
+
+body.dark-mode .compare-table {
+  border-color: var(--border);
+}
+
+/* ─── 22. Before/After Auto-Animate on Scroll ────── */
+@keyframes baAutoSlide {
+  0%, 100% { --ba-pos: 50%; }
+  30% { --ba-pos: 25%; }
+  70% { --ba-pos: 75%; }
+}
+
+.ba-wrapper.auto-animate .ba-before {
+  animation: baAutoClip 2.5s ease-in-out forwards;
+}
+
+.ba-wrapper.auto-animate .ba-handle {
+  animation: baAutoHandle 2.5s ease-in-out forwards;
+}
+
+@keyframes baAutoClip {
+  0%, 100% { clip-path: inset(0 50% 0 0); }
+  30% { clip-path: inset(0 75% 0 0); }
+  70% { clip-path: inset(0 25% 0 0); }
+}
+
+@keyframes baAutoHandle {
+  0%, 100% { left: 50%; }
+  30% { left: 25%; }
+  70% { left: 75%; }
+}
+
+/* ─── 23. Launch Countdown Timer ─────────────────── */
+.launch-countdown {
+  margin: 20px 0 28px;
+  text-align: center;
+}
+
+.cd-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.cd-units {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 56px;
+}
+
+.cd-num {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  min-width: 52px;
+  text-align: center;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  transition: transform 0.3s ease;
+}
+
+.cd-num.tick {
+  transform: scale(1.1);
+}
+
+.cd-txt {
+  font-size: 0.62rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.cd-sep {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin-bottom: 18px;
+}
+
+/* ─── 24. Emoji Reactions on Testimonials ────────── */
+.testi-reactions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.reaction-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--accent-dim);
+  border: 1px solid transparent;
+  border-radius: 100px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  transition: all 0.2s ease;
+}
+
+.reaction-btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.reaction-btn.reacted {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.reaction-emoji {
+  font-size: 0.95rem;
+}
+
+.reaction-count {
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.reaction-btn.reacted .reaction-count {
+  color: #fff;
+}
+
+@keyframes reactionBurst {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+
+.reaction-btn.burst .reaction-emoji {
+  animation: reactionBurst 0.4s ease;
+}
+
+/* ─── 25. ParentAI vs The Old Way Table ──────────── */
+.compare-table-section {
+  padding: 80px 5% 60px;
+  text-align: center;
+}
+
+.compare-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  max-width: 780px;
+  margin: 40px auto 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+
+.ct-header {
+  padding: 16px 20px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.ct-header-old {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.ct-header-new {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+body.dark-mode .ct-header-old {
+  background: #2d1b1b;
+  color: #fca5a5;
+}
+
+body.dark-mode .ct-header-new {
+  background: #1e2a4a;
+  color: #93c5fd;
+}
+
+.ct-row {
+  display: contents;
+}
+
+.ct-cell {
+  padding: 14px 20px;
+  font-size: 0.85rem;
+  text-align: left;
+  background: var(--bg2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ct-x {
+  color: #ef4444;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.ct-check {
+  color: #22c55e;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.4s cubic-bezier(.34,1.56,.64,1);
+}
+
+.ct-check.animated {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (max-width: 600px) {
+  .compare-table {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .ct-header-old { border-bottom: 2px solid var(--border); }
+  .ct-header-new { display: none; }
+  .ct-cell.ct-new {
+    background: #f0f9ff;
+    border-left: 3px solid var(--accent);
+  }
+  body.dark-mode .ct-cell.ct-new {
+    background: #1e2a4a;
+  }
+}
+
+/* ─── 26. Scroll-Position Nav Dots ───────────────── */
+.scroll-nav-dots {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 95;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.scroll-nav-dots.visible {
+  opacity: 1;
+}
+
+.snd {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0;
+}
+
+.snd:hover,
+.snd.active {
+  background: var(--accent);
+  transform: scale(1.5);
+}
+
+.snd-label {
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--text);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.snd:hover .snd-label {
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
+  .scroll-nav-dots { display: none; }
+}
+
+/* ─── 27. Referral Share Widget ──────────────────── */
+.share-widget {
+  position: fixed;
+  left: 20px;
+  bottom: 90px;
+  z-index: 95;
+}
+
+.share-fab {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.share-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(37,99,235,0.35);
+}
+
+.share-dropdown {
+  position: absolute;
+  bottom: 54px;
+  left: 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 0;
+  min-width: 140px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  opacity: 0;
+  transform: translateY(8px) scale(0.95);
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.share-dropdown.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.share-opt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--text);
+  transition: background 0.15s ease;
+}
+
+.share-opt:hover {
+  background: var(--accent-dim);
+}
+
+.share-copied {
+  color: #22c55e !important;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .share-widget {
+    left: auto;
+    right: 20px;
+    bottom: 140px;
+  }
+}
+
+/* ─── 28. Waitlist Position Reveal ───────────────── */
+.wl-position-reveal {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(.34,1.56,.64,1);
+}
+
+.wl-position-reveal.visible {
+  max-height: 200px;
+}
+
+.wl-pos-inner {
+  text-align: center;
+  padding: 20px 0 10px;
+  position: relative;
+}
+
+.wl-pos-number {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.wl-pos-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.wl-pos-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ─── 29. "Why Parents Love It" Ticker ───────────── */
+.love-ticker {
+  padding: 24px 0;
+  overflow: hidden;
+  background: var(--accent);
+}
+
+.love-ticker-track {
+  overflow: hidden;
+}
+
+.love-ticker-inner {
+  display: flex;
+  gap: 20px;
+  animation: loveScroll 20s linear infinite;
+  white-space: nowrap;
+  align-items: center;
+}
+
+.love-stat {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
+}
+
+.love-num {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.love-sep {
+  color: rgba(255,255,255,0.4);
+  font-weight: 300;
+  flex-shrink: 0;
+}
+
+@keyframes loveScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ─── 30. Keyboard Shortcut Hint ─────────────────── */
+.footer-shortcuts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shortcut-hint {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shortcut-hint kbd {
+  display: inline-block;
+  background: var(--accent-dim);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+@media (max-width: 600px) {
+  .footer-shortcuts { display: none; }
+}
 }
