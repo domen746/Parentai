@@ -898,3 +898,149 @@ if (cookieBanner && !localStorage.getItem('parentai_cookies')) {
 
   ringObserver.observe(ringFill.closest('.stat-ring-wrap') || ringFill);
 })();
+
+// ─── 11. Phone Sparkle Particles ─────────────────
+(function() {
+  const container = document.getElementById('phoneSparkles');
+  if (!container) return;
+
+  const colors = ['#2563eb', '#60a5fa', '#a78bfa', '#6ee7b7', '#fbbf24'];
+
+  for (let i = 0; i < 12; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = 20 + Math.random() * 60 + '%';
+    s.style.width = (3 + Math.random() * 3) + 'px';
+    s.style.height = s.style.width;
+    s.style.background = colors[Math.floor(Math.random() * colors.length)];
+    s.style.animationDelay = (Math.random() * 3) + 's';
+    s.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+    container.appendChild(s);
+  }
+})();
+
+// ─── 13. Scroll Depth CTA Popup ──────────────────
+(function() {
+  const cta = document.getElementById('scrollDepthCta');
+  const closeBtn = document.getElementById('sdcClose');
+  if (!cta) return;
+
+  let dismissed = false;
+  let shown = false;
+
+  window.addEventListener('scroll', () => {
+    if (dismissed) return;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? window.scrollY / docHeight : 0;
+
+    if (pct > 0.6 && !shown) {
+      shown = true;
+      cta.classList.add('visible');
+    } else if (pct <= 0.5 && shown && !dismissed) {
+      shown = false;
+      cta.classList.remove('visible');
+    }
+  }, { passive: true });
+
+  closeBtn?.addEventListener('click', () => {
+    dismissed = true;
+    cta.classList.remove('visible');
+  });
+
+  // Also dismiss when user clicks the CTA link
+  cta.querySelector('.sdc-btn')?.addEventListener('click', () => {
+    dismissed = true;
+    setTimeout(() => cta.classList.remove('visible'), 300);
+  });
+})();
+
+// ─── 16. Sticky Pricing Bar on Mobile ────────────
+(function() {
+  const bar = document.getElementById('stickyPricingBar');
+  const pricingSection = document.getElementById('pricing');
+  if (!bar || !pricingSection || window.innerWidth > 900) return;
+
+  const planEl = document.getElementById('spbPlan');
+  const priceEl = document.getElementById('spbPrice');
+  const cards = pricingSection.querySelectorAll('.pricing-card');
+
+  const pricingObserver = new IntersectionObserver((entries) => {
+    bar.classList.toggle('visible', entries[0].isIntersecting);
+  }, { threshold: 0.05 });
+
+  pricingObserver.observe(pricingSection);
+
+  // Update plan name when scrolling through cards
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const tier = entry.target.querySelector('.pricing-tier');
+        const price = entry.target.querySelector('.pricing-price');
+        if (tier && planEl) planEl.textContent = tier.textContent;
+        if (price && priceEl) priceEl.textContent = price.textContent.replace(/\s+/g, '');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  cards.forEach(c => cardObserver.observe(c));
+})();
+
+// ─── 17. Slot-Machine Badge Counter ──────────────
+(function() {
+  const badge = document.querySelector('.hero-badge');
+  if (!badge) return;
+  const counterEl = document.getElementById('heroCounter');
+  if (!counterEl) return;
+
+  const text = counterEl.textContent;
+  const wrap = document.createElement('span');
+  wrap.className = 'badge-counter-wrap';
+
+  for (let i = 0; i < text.length; i++) {
+    const span = document.createElement('span');
+    span.className = 'badge-digit';
+    span.textContent = text[i];
+    span.style.setProperty('--d', (i * 0.08) + 's');
+    wrap.appendChild(span);
+  }
+
+  counterEl.textContent = '';
+  counterEl.appendChild(wrap);
+})();
+
+// ─── 19. Button Ripple Effect ────────────────────
+(function() {
+  const btns = document.querySelectorAll('.btn-primary, .btn-outline, .nav-cta');
+
+  btns.forEach(btn => {
+    btn.classList.add('btn-ripple');
+
+    btn.addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const circle = document.createElement('span');
+      circle.className = 'ripple-circle';
+      const size = Math.max(rect.width, rect.height);
+      circle.style.width = circle.style.height = size + 'px';
+      circle.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      circle.style.top = (e.clientY - rect.top - size / 2) + 'px';
+      this.appendChild(circle);
+      circle.addEventListener('animationend', () => circle.remove());
+    });
+  });
+})();
+
+// ─── 20. FAQ Counter Badge Animation ─────────────
+(function() {
+  const badge = document.getElementById('faqCountBadge');
+  if (!badge) return;
+
+  const faqObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      badge.classList.add('visible');
+      faqObserver.disconnect();
+    }
+  }, { threshold: 0.3 });
+
+  faqObserver.observe(badge);
+})();

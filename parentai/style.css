@@ -2798,4 +2798,289 @@ body {
   z-index: 1;
   font-size: 1.4rem !important;
 }
+
+/* ─── 11. Phone Sparkle Particles ────────────────── */
+.phone-sparkles {
+  position: absolute;
+  inset: -30px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  animation: sparkleFloat 3s ease-in-out infinite;
+}
+
+@keyframes sparkleFloat {
+  0% { opacity: 0; transform: translateY(0) scale(0); }
+  20% { opacity: 0.8; transform: translateY(-10px) scale(1); }
+  80% { opacity: 0.3; transform: translateY(-40px) scale(0.6); }
+  100% { opacity: 0; transform: translateY(-60px) scale(0); }
+}
+
+/* ─── 12. Animated Gradient Section Labels ───────── */
+.section-label {
+  background: linear-gradient(90deg, var(--accent), #a78bfa, #60a5fa, var(--accent));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: labelGradient 4s ease infinite;
+}
+
+@keyframes labelGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ─── 13. Scroll Depth CTA Bar ───────────────────── */
+.scroll-depth-cta {
+  position: fixed;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 12px 20px 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 95;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  transition: bottom 0.5s cubic-bezier(.4,.9,.3,1);
+  white-space: nowrap;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  max-width: 90vw;
+}
+
+.scroll-depth-cta.visible {
+  bottom: 32px;
+}
+
+.scroll-depth-cta strong {
+  color: var(--accent);
+}
+
+.sdc-btn {
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.sdc-btn:hover { opacity: 0.85; }
+
+.sdc-close {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.sdc-close:hover { color: var(--text); }
+
+@media (max-width: 700px) {
+  .scroll-depth-cta {
+    border-radius: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+    padding: 14px 18px;
+    gap: 10px;
+    bottom: -120px;
+  }
+  .scroll-depth-cta.visible {
+    bottom: 20px;
+  }
+}
+
+/* ─── 14. Feature Card Icon Pulse ────────────────── */
+.feat-icon-wrap {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card.visible .feat-icon-wrap {
+  animation: iconPulse 2s ease-in-out 0.3s;
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,99,235,0.2); }
+  30% { transform: scale(1.12); box-shadow: 0 0 0 8px rgba(37,99,235,0); }
+  60% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,99,235,0); }
+}
+
+/* ─── 15. Testimonial Quote Marks ────────────────── */
+.testi-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.testi-card::after {
+  content: '\201C';
+  position: absolute;
+  top: -8px;
+  right: 16px;
+  font-size: 6rem;
+  font-family: Georgia, serif;
+  color: var(--accent);
+  opacity: 0.06;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.testi-featured::after {
+  font-size: 8rem;
+  opacity: 0.08;
+  top: -12px;
+  right: 24px;
+}
+
+/* ─── 16. Sticky Pricing Bar (mobile) ────────────── */
+.sticky-pricing-bar {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .sticky-pricing-bar {
+    position: fixed;
+    top: 64px;
+    left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 5%;
+    background: rgba(240,246,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 90;
+    font-size: 0.82rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .sticky-pricing-bar.visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .spb-plan {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .spb-price {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .spb-cta {
+    background: var(--accent);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .spb-cta:hover { opacity: 0.85; }
+}
+
+/* ─── 17. Slot-Machine Hero Badge Counter ────────── */
+.hero-badge .badge-counter-wrap {
+  display: inline-flex;
+  overflow: hidden;
+  height: 1.2em;
+  vertical-align: bottom;
+}
+
+.badge-digit {
+  display: inline-block;
+  animation: slotRoll 0.6s ease-out forwards;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes slotRoll {
+  0% { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ─── 18. Noise Texture Overlay ──────────────────── */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ─── 19. Button Ripple Effect ───────────────────── */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  transform: scale(0);
+  animation: rippleExpand 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes rippleExpand {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ─── 20. FAQ Counter Badge ──────────────────────── */
+.faq-count-badge {
+  display: inline-block;
+  background: var(--accent-dim);
+  border: 1px solid rgba(37,99,235,0.2);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 100px;
+  vertical-align: middle;
+  margin-left: 8px;
+  letter-spacing: 0.02em;
+  font-family: var(--font-body);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(.34,1.56,.64,1);
+}
+
+.faq-count-badge.visible {
+  opacity: 1;
+  transform: scale(1);
+}
 }

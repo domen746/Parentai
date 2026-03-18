@@ -37,6 +37,9 @@
 </head>
 <body>
 
+  <!-- NOISE TEXTURE OVERLAY -->
+  <div class="noise-overlay"></div>
+
   <!-- CUSTOM CURSOR -->
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
@@ -131,6 +134,7 @@
 
     <div class="hero-visual">
       <div class="phone-glow"></div>
+      <div class="phone-sparkles" id="phoneSparkles"></div>
       <div class="phone-mockup">
         <div class="phone-dynamic-island"></div>
         <div class="phone-screen">
@@ -635,7 +639,7 @@
   <!-- FAQ -->
   <section class="faq-section" id="faq">
     <div class="section-label">Questions</div>
-    <h2 class="section-title">Frequently asked</h2>
+    <h2 class="section-title">Frequently asked <span class="faq-count-badge" id="faqCountBadge">6 questions</span></h2>
 
     <div class="faq-grid">
       <div class="faq-item">
@@ -765,6 +769,20 @@
       </div>
     </div>
   </footer>
+
+  <!-- SCROLL DEPTH CTA -->
+  <div class="scroll-depth-cta" id="scrollDepthCta">
+    <span>Still looking? Lock in <strong>3 months free</strong> before spots run out</span>
+    <a href="#waitlist" class="sdc-btn">Claim Offer &rarr;</a>
+    <button class="sdc-close" id="sdcClose" aria-label="Close">&times;</button>
+  </div>
+
+  <!-- STICKY PRICING BAR (mobile) -->
+  <div class="sticky-pricing-bar" id="stickyPricingBar">
+    <span class="spb-plan" id="spbPlan">Family</span>
+    <span class="spb-price" id="spbPrice">$7/mo</span>
+    <a href="#waitlist" class="spb-cta">Join</a>
+  </div>
 
   <!-- COOKIE CONSENT -->
   <div class="cookie-banner" id="cookieBanner">
