@@ -2524,3 +2524,278 @@ body {
   .marquee-strip { padding: 14px 5%; }
   .pricing-toggle { flex-wrap: wrap; }
 }
+
+/* ─── 1. Social Proof Toast ──────────────────────── */
+.social-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 95;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  transform: translateY(120%);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(.4,.9,.3,1), opacity 0.4s ease;
+  pointer-events: none;
+  max-width: 320px;
+}
+
+.social-toast.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toast-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: #bfdbfe;
+  color: #1d4ed8;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  flex-shrink: 0;
+}
+
+.toast-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toast-msg {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.toast-msg strong { color: var(--text); }
+
+.toast-time {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+@media (max-width: 600px) {
+  .social-toast {
+    left: 16px;
+    right: 16px;
+    bottom: 20px;
+    max-width: none;
+  }
+}
+
+/* ─── 2. 3D Tilt on Cards ───────────────────────── */
+.features-grid,
+.testimonials-grid,
+.pricing-grid {
+  perspective: 1200px;
+}
+
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+}
+
+/* ─── 3. Magnetic CTA Buttons ────────────────────── */
+.btn-magnetic {
+  transition: transform 0.2s ease-out;
+}
+
+/* ─── 4. Animated Step Connectors ────────────────── */
+.step-connector {
+  position: relative;
+  overflow: hidden;
+}
+
+.step-connector::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transition: none;
+}
+
+.step.visible .step-connector::after {
+  width: 100%;
+  transition: width 0.8s ease 0.3s;
+}
+
+/* ─── 5. Text Marker Highlight ───────────────────── */
+.highlight-mark {
+  background: linear-gradient(120deg, rgba(37,99,235,0.15) 0%, rgba(96,165,250,0.2) 100%);
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background-size 0.8s ease;
+}
+
+.highlight-mark.revealed {
+  background-size: 100% 100%;
+}
+
+/* ─── 6. Pricing Card Hover Lift ─────────────────── */
+.pricing-card {
+  transition: border-color var(--transition), transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(37,99,235,0.12);
+}
+
+.pricing-popular:hover {
+  box-shadow: 0 12px 48px rgba(37,99,235,0.22), 0 0 0 2px rgba(37,99,235,0.15);
+}
+
+/* ─── 7. Section Blur-to-Sharp Reveal ────────────── */
+.blur-reveal {
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, filter 0.7s ease, transform 0.7s ease;
+}
+
+.blur-reveal.revealed {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* ─── 8. Rotating Hero Words ─────────────────────── */
+.rotating-words {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  vertical-align: bottom;
+  height: 1.12em;
+  min-width: 200px;
+}
+
+.rw-word {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(.4,.9,.3,1), opacity 0.4s ease;
+  white-space: nowrap;
+}
+
+.rw-word.rw-active {
+  position: relative;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rw-word.rw-exit {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+/* ─── 9. Custom Cursor ───────────────────────────── */
+@media (pointer: fine) {
+  .cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+    mix-blend-mode: difference;
+  }
+
+  .cursor-ring {
+    position: fixed;
+    top: 0; left: 0;
+    width: 32px; height: 32px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+    opacity: 0.5;
+  }
+
+  .cursor-dot.hovering {
+    width: 10px; height: 10px;
+    background: #60a5fa;
+  }
+
+  .cursor-ring.hovering {
+    width: 48px; height: 48px;
+    border-color: #60a5fa;
+    opacity: 0.3;
+  }
+
+  body { cursor: none; }
+  a, button, input, .ba-wrapper, .toggle-switch, .faq-q { cursor: none; }
+}
+
+@media (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* ─── 10. Stats SVG Ring ─────────────────────────── */
+.stat-ring-wrap {
+  position: relative;
+}
+
+.stat-ring {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring-bg {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 4;
+}
+
+.ring-fill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 213.6;
+  stroke-dashoffset: 213.6;
+  transition: stroke-dashoffset 1.5s ease;
+}
+
+.ring-fill.animated {
+  stroke-dashoffset: 12.8;
+}
+
+.ring-num {
+  position: relative;
+  z-index: 1;
+  font-size: 1.4rem !important;
+}
+}

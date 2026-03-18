@@ -686,3 +686,215 @@ if (cookieBanner && !localStorage.getItem('parentai_cookies')) {
     cookieBanner.classList.remove('visible');
   });
 }
+
+// ─── 1. Social Proof Toast Notifications ──────────
+(function() {
+  const toast = document.getElementById('socialToast');
+  if (!toast) return;
+
+  const people = [
+    { name: 'Laura', city: 'Berlin', initial: 'L', bg: '#bfdbfe', color: '#1d4ed8' },
+    { name: 'James', city: 'London', initial: 'J', bg: '#ddd6fe', color: '#6d28d9' },
+    { name: 'Anika', city: 'Amsterdam', initial: 'A', bg: '#fef3c7', color: '#92400e' },
+    { name: 'Marcus', city: 'Stockholm', initial: 'M', bg: '#fecaca', color: '#991b1b' },
+    { name: 'Sofia', city: 'Madrid', initial: 'S', bg: '#d1fae5', color: '#065f46' },
+    { name: 'Tom', city: 'Dublin', initial: 'T', bg: '#e0e7ff', color: '#3730a3' },
+    { name: 'Elena', city: 'Zurich', initial: 'E', bg: '#fce7f3', color: '#9d174d' },
+    { name: 'David', city: 'Paris', initial: 'D', bg: '#ccfbf1', color: '#0f766e' },
+  ];
+
+  const nameEl = document.getElementById('toastName');
+  const cityEl = document.getElementById('toastCity');
+  const avatarEl = document.getElementById('toastAvatar');
+  const timeEl = document.getElementById('toastTime');
+
+  function showToast() {
+    const p = people[Math.floor(Math.random() * people.length)];
+    const mins = Math.floor(Math.random() * 10) + 1;
+    nameEl.textContent = p.name;
+    cityEl.textContent = p.city;
+    avatarEl.textContent = p.initial;
+    avatarEl.style.background = p.bg;
+    avatarEl.style.color = p.color;
+    timeEl.textContent = mins === 1 ? '1 minute ago' : mins + ' minutes ago';
+
+    toast.classList.add('visible');
+    setTimeout(() => toast.classList.remove('visible'), 4000);
+  }
+
+  // First toast after 8s, then every 25-50s
+  setTimeout(() => {
+    showToast();
+    setInterval(() => showToast(), (25 + Math.random() * 25) * 1000);
+  }, 8000);
+})();
+
+// ─── 2. 3D Tilt on Cards ─────────────────────────
+(function() {
+  const cards = document.querySelectorAll('.feature-card, .testi-card, .pricing-card');
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+
+  cards.forEach(card => {
+    card.classList.add('tilt-card');
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(600px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-3px)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+})();
+
+// ─── 3. Magnetic CTA Buttons ─────────────────────
+(function() {
+  const btns = document.querySelectorAll('.btn-primary, .nav-cta');
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+
+  btns.forEach(btn => {
+    btn.classList.add('btn-magnetic');
+
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) * 0.2;
+      const dy = (e.clientY - cy) * 0.2;
+      btn.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+})();
+
+// ─── 4. Animated Step Connectors ─────────────────
+// (Uses the existing .visible class from scroll-reveal observer —
+//  the CSS transition handles the draw-in animation)
+
+// ─── 5. Text Marker Highlight on Scroll ──────────
+(function() {
+  const marks = document.querySelectorAll('.highlight-mark');
+  if (!marks.length) return;
+
+  const markObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        markObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  marks.forEach(m => markObserver.observe(m));
+})();
+
+// ─── 7. Section Blur-to-Sharp Reveal ─────────────
+(function() {
+  const sections = document.querySelectorAll(
+    '.section-title, .section-sub, .section-label'
+  );
+  const blurObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        blurObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  sections.forEach(el => {
+    el.classList.add('blur-reveal');
+    blurObserver.observe(el);
+  });
+})();
+
+// ─── 8. Rotating Hero Words ──────────────────────
+(function() {
+  const words = document.querySelectorAll('.rw-word');
+  if (words.length < 2) return;
+
+  let currentIdx = 0;
+
+  setInterval(() => {
+    const current = words[currentIdx];
+    current.classList.add('rw-exit');
+    current.classList.remove('rw-active');
+
+    currentIdx = (currentIdx + 1) % words.length;
+    const next = words[currentIdx];
+
+    setTimeout(() => {
+      current.classList.remove('rw-exit');
+      next.classList.add('rw-active');
+    }, 400);
+  }, 2500);
+})();
+
+// ─── 9. Custom Cursor ────────────────────────────
+(function() {
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+
+  const dot = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  if (!dot || !ring) return;
+
+  let mx = 0, my = 0;
+  let rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mx = e.clientX;
+    my = e.clientY;
+    dot.style.left = mx + 'px';
+    dot.style.top = my + 'px';
+  });
+
+  // Smooth follow for ring
+  function followRing() {
+    rx += (mx - rx) * 0.15;
+    ry += (my - ry) * 0.15;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(followRing);
+  }
+  followRing();
+
+  // Hover detection
+  const hoverTargets = 'a, button, input, .ba-wrapper, .toggle-switch, .faq-q, .pricing-card, .feature-card, .testi-card';
+
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest(hoverTargets)) {
+      dot.classList.add('hovering');
+      ring.classList.add('hovering');
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    if (e.target.closest(hoverTargets)) {
+      dot.classList.remove('hovering');
+      ring.classList.remove('hovering');
+    }
+  });
+})();
+
+// ─── 10. Scroll-Triggered Stats Ring ─────────────
+(function() {
+  const ringFill = document.querySelector('.ring-fill[data-pct]');
+  if (!ringFill) return;
+
+  const ringObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        ringFill.classList.add('animated');
+        ringObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  ringObserver.observe(ringFill.closest('.stat-ring-wrap') || ringFill);
+})();

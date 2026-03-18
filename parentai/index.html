@@ -37,6 +37,19 @@
 </head>
 <body>
 
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- SOCIAL PROOF TOAST -->
+  <div class="social-toast" id="socialToast">
+    <div class="toast-avatar" id="toastAvatar">L</div>
+    <div class="toast-body">
+      <div class="toast-msg"><strong id="toastName">Laura</strong> from <span id="toastCity">Berlin</span> just joined</div>
+      <div class="toast-time" id="toastTime">2 minutes ago</div>
+    </div>
+  </div>
+
   <!-- PAGE LOADER -->
   <div class="page-loader" id="pageLoader">
     <div class="loader-bar" id="loaderBar"></div>
@@ -79,7 +92,7 @@
         Now in beta — <span id="heroCounter">2,419</span> parents joined
       </div>
       <h1 class="hero-title">
-        Your kid cleans.<br />
+        Your kid <span class="rotating-words"><span class="rw-word rw-active">cleans.</span><span class="rw-word">organizes.</span><span class="rw-word">tidies.</span><span class="rw-word">picks up.</span></span><br />
         <em>AI verifies.</em>
       </h1>
       <p class="hero-sub">
@@ -236,8 +249,14 @@
       <span class="stat-label">Parents on waitlist</span>
     </div>
     <div class="stat-divider"></div>
-    <div class="stat">
-      <span class="stat-num">94%</span>
+    <div class="stat stat-ring-wrap">
+      <div class="stat-ring">
+        <svg class="ring-svg" viewBox="0 0 80 80">
+          <circle class="ring-bg" cx="40" cy="40" r="34" />
+          <circle class="ring-fill" cx="40" cy="40" r="34" data-pct="94" />
+        </svg>
+        <span class="stat-num ring-num">94%</span>
+      </div>
       <span class="stat-label">Detection accuracy</span>
     </div>
     <div class="stat-divider"></div>
@@ -265,7 +284,7 @@
   <section class="features" id="features">
     <div class="section-label">What it does</div>
     <h2 class="section-title">Everything you need.<br />Nothing you don't.</h2>
-    <p class="section-sub">Six capabilities working together to make clean rooms the path of least resistance.</p>
+    <p class="section-sub"><span class="highlight-mark">Six capabilities</span> working together to make clean rooms the path of least resistance.</p>
 
     <div class="features-grid">
       <div class="feature-card feature-large">
@@ -356,7 +375,7 @@
   <section class="how-it-works" id="how">
     <div class="section-label">The process</div>
     <h2 class="section-title">Simple enough for<br />a 6-year-old</h2>
-    <p class="section-sub">The whole loop — scan, clean, verify — takes under 5 minutes.</p>
+    <p class="section-sub">The whole loop — scan, clean, verify — takes <span class="highlight-mark">under 5 minutes</span>.</p>
 
     <div class="steps-grid">
       <div class="step">
@@ -609,7 +628,7 @@
     </div>
     <p class="pricing-note">
       <span class="pn-icon">★</span>
-      Early waitlist members get <strong>3 months free</strong> on any paid plan — no credit card required.
+      Early waitlist members get <strong><span class="highlight-mark">3 months free</span></strong> on any paid plan — no credit card required.
     </p>
   </section>
 
