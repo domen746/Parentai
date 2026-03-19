@@ -184,6 +184,8 @@ setupEmailValidation('heroEmail', 'heroEmailStatus', 'heroFeedback');
 setupEmailValidation('wlEmail', 'wlEmailStatus', 'wlFeedback');
 
 // ─── Waitlist form submission ─────────────────────
+const WEB3FORMS_KEY = '45a1fb4b-b6ff-4b33-9121-1cd8448802b3';
+
 function handleWaitlistSubmit(e) {
   e.preventDefault();
   const form = e.target;
@@ -207,47 +209,78 @@ function handleWaitlistSubmit(e) {
     return;
   }
 
-  // Success — save locally
+  // Disable while submitting
   const originalText = btn.textContent;
   btn.disabled = true;
   input.disabled = true;
+  btn.textContent = 'Joining…';
 
-  btn.textContent = '✓ You\'re on the list!';
-  btn.style.background = '#bfdbfe';
-  btn.style.color = '#1e40af';
-  // Confetti burst
-  launchConfetti(btn);
-  if (feedback) {
-    feedback.textContent = 'We\'ll email you the moment we launch. Welcome to ParentAI!';
-    feedback.className = 'email-feedback success';
-  }
+  // Send to Web3Forms
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      access_key: WEB3FORMS_KEY,
+      email: email,
+      subject: 'New ParentAI Waitlist Signup',
+      from_name: 'ParentAI Waitlist',
+      message: 'New waitlist signup: ' + email
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      btn.textContent = '✓ You\'re on the list!';
+      btn.style.background = '#bfdbfe';
+      btn.style.color = '#1e40af';
+      launchConfetti(btn);
+      if (feedback) {
+        feedback.textContent = 'We\'ll email you the moment we launch. Welcome to ParentAI!';
+        feedback.className = 'email-feedback success';
+      }
 
-  // Increment the live counter
-  currentCount += 1;
-  lastSignupSeconds = 0;
-  updateAllCounters();
-  updateLastSignup();
-  pulseCounters();
+      // Increment the live counter
+      currentCount += 1;
+      lastSignupSeconds = 0;
+      updateAllCounters();
+      updateLastSignup();
+      pulseCounters();
 
-  // Save locally
-  const saved = JSON.parse(localStorage.getItem('parentai_waitlist') || '[]');
-  saved.push({ email, date: new Date().toISOString() });
-  localStorage.setItem('parentai_waitlist', JSON.stringify(saved));
-
-  setTimeout(() => {
-    btn.textContent = originalText;
-    btn.style.background = '';
-    btn.style.color = '';
-    btn.disabled = false;
-    input.value = '';
-    input.disabled = false;
-    if (feedback) {
-      feedback.textContent = '';
-      feedback.className = 'email-feedback';
+      // Save locally as backup
+      const saved = JSON.parse(localStorage.getItem('parentai_waitlist') || '[]');
+      saved.push({ email, date: new Date().toISOString() });
+      localStorage.setItem('parentai_waitlist', JSON.stringify(saved));
+    } else {
+      btn.textContent = 'Try again';
+      if (feedback) {
+        feedback.textContent = 'Something went wrong. Please try again.';
+        feedback.className = 'email-feedback error';
+      }
     }
-    const statusEl = document.getElementById(inputId === 'heroEmail' ? 'heroEmailStatus' : 'wlEmailStatus');
-    if (statusEl) { statusEl.textContent = ''; statusEl.className = 'email-status'; }
-  }, 7000);
+  })
+  .catch(() => {
+    btn.textContent = 'Try again';
+    if (feedback) {
+      feedback.textContent = 'Network error. Please try again.';
+      feedback.className = 'email-feedback error';
+    }
+  })
+  .finally(() => {
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.disabled = false;
+      input.value = '';
+      input.disabled = false;
+      if (feedback) {
+        feedback.textContent = '';
+        feedback.className = 'email-feedback';
+      }
+      const statusEl = document.getElementById(inputId === 'heroEmail' ? 'heroEmailStatus' : 'wlEmailStatus');
+      if (statusEl) { statusEl.textContent = ''; statusEl.className = 'email-status'; }
+    }, 7000);
+  });
 }
 
 document.getElementById('hero-form')?.addEventListener('submit', handleWaitlistSubmit);
