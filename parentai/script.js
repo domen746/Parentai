@@ -221,10 +221,12 @@ function handleWaitlistSubmit(e) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       access_key: WEB3FORMS_KEY,
-      email: email,
       subject: 'New ParentAI Waitlist Signup',
       from_name: 'ParentAI Waitlist',
-      message: 'New waitlist signup: ' + email
+      name: 'Waitlist Signup',
+      email: email,
+      source: inputId === 'heroEmail' ? 'Hero Form' : 'Waitlist Section',
+      signup_date: new Date().toISOString()
     })
   })
   .then(res => res.json())
