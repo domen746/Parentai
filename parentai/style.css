@@ -4311,3 +4311,275 @@ body.dark-mode .btn-primary::after {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+/* ═══════════════════════════════════════════════════
+   BATCH – 10 new features
+   ═══════════════════════════════════════════════════ */
+
+/* ─── 1. Animated nav link underlines ────────────── */
+.nav-links a:not(.nav-cta) {
+  position: relative;
+}
+
+.nav-links a:not(.nav-cta)::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+  transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nav-links a:not(.nav-cta):hover::after,
+.nav-links a:not(.nav-cta).active::after {
+  width: 100%;
+}
+
+/* ─── 2. Gradient animated CTA buttons ──────────── */
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb, #7c3aed, #2563eb);
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ─── 3. Waitlist card glow border ──────────────── */
+.waitlist-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.waitlist-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 2px;
+  background: linear-gradient(135deg, #2563eb, #a78bfa, #60a5fa, #2563eb);
+  background-size: 400% 400%;
+  animation: glowBorder 6s ease infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@keyframes glowBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ─── 4. Testimonial average rating bar ─────────── */
+.testi-rating-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 48px;
+  padding: 20px 28px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  max-width: 560px;
+}
+
+.trb-stars {
+  color: #fbbf24;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  flex-shrink: 0;
+}
+
+.trb-score {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.trb-score span {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-dim);
+}
+
+.trb-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  min-width: 60px;
+}
+
+.trb-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+  border-radius: 3px;
+  transition: width 1s ease;
+}
+
+.trb-count {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .testi-rating-bar {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+}
+
+/* ─── 5. How-it-works step reveal animation ─────── */
+.step {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.step:nth-child(odd) {
+  transform: translateX(-40px);
+}
+
+.step:nth-child(even) {
+  transform: translateX(40px);
+}
+
+.step.step-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ─── 6. Feature card shine sweep ───────────────── */
+.feature-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 60%
+  );
+  transition: left 0.6s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.feature-card:hover::after {
+  left: 130%;
+}
+
+body.dark-mode .feature-card::after {
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.05) 45%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.05) 55%,
+    transparent 60%
+  );
+}
+
+/* ─── 7. Comparison row hover highlight ─────────── */
+.ct-row:hover .ct-cell {
+  background: var(--accent-dim);
+  transition: background 0.2s ease;
+}
+
+.ct-row:hover .ct-cell.ct-new {
+  background: rgba(37, 99, 235, 0.1);
+}
+
+body.dark-mode .ct-row:hover .ct-cell {
+  background: rgba(37, 99, 235, 0.08);
+}
+
+/* ─── 8. Pricing savings calculator ─────────────── */
+.pricing-savings {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #16a34a;
+  margin-bottom: 6px;
+  min-height: 1.2em;
+  transition: opacity 0.3s ease;
+}
+
+.pricing-savings:empty {
+  display: none;
+}
+
+body.dark-mode .pricing-savings {
+  color: #4ade80;
+}
+
+/* ─── 9. Hero counter entrance animation ────────── */
+.hero-badge {
+  animation: badgeEntrance 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.3s both;
+}
+
+@keyframes badgeEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+#heroCounter {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.hero-badge:hover #heroCounter {
+  transform: scale(1.1);
+  color: var(--accent);
+}
+
+/* ─── 10. Footer social links with hover ────────── */
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  font-size: 0 !important;
+}
+
+.social-link:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+}
+
+.social-link svg {
+  flex-shrink: 0;
+}

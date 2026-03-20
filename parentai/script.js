@@ -1702,4 +1702,98 @@ if (cookieBanner && !localStorage.getItem('parentai_cookies')) {
 })();
 
 // ─── Improvement 8: Feature icon hover uses CSS only ──
+
+// ═══════════════════════════════════════════════════
+// BATCH – 10 new features (JS portions)
+// ═══════════════════════════════════════════════════
+
+// ─── 1. Nav active link underline based on scroll ──
+(() => {
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+  if (!sections.length || !navAnchors.length) return;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navAnchors.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+})();
+
+// ─── 5. How-it-works step reveal animation ─────────
+(() => {
+  const steps = document.querySelectorAll('.step');
+  if (!steps.length) return;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('step-visible'), i * 120);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  steps.forEach(s => observer.observe(s));
+})();
+
+// ─── 8. Pricing savings calculator ─────────────────
+(() => {
+  const toggle = document.getElementById('pricingToggle');
+  const savingsEl = document.getElementById('pricingSavings');
+  const savingsProEl = document.getElementById('pricingSavingsPro');
+  if (!toggle) return;
+
+  function updateSavings() {
+    const yearly = toggle.checked;
+    if (yearly) {
+      // Family: $7/mo vs $5/mo = save $24/yr
+      if (savingsEl) savingsEl.textContent = 'You save $24/yr';
+      // Pro: $14/mo vs $10/mo = save $48/yr
+      if (savingsProEl) savingsProEl.textContent = 'You save $48/yr';
+    } else {
+      if (savingsEl) savingsEl.textContent = '';
+      if (savingsProEl) savingsProEl.textContent = '';
+    }
+  }
+
+  toggle.addEventListener('change', updateSavings);
+  updateSavings();
+})();
+
+// ─── 9. Hero counter count-up entrance ─────────────
+(() => {
+  const counter = document.getElementById('heroCounter');
+  if (!counter) return;
+  const target = parseInt(counter.textContent.replace(/,/g, ''), 10);
+  if (isNaN(target)) return;
+
+  let started = false;
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !started) {
+      started = true;
+      const duration = 1200;
+      const start = performance.now();
+      function tick(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(ease * target);
+        counter.textContent = current.toLocaleString();
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      observer.unobserve(counter);
+    }
+  }, { threshold: 0.5 });
+
+  observer.observe(counter);
+})();
 // (Pure CSS — mesh blobs animate via CSS keyframes, no JS needed)
